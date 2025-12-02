@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxt/ui": "4.2.1",
     "@tailwindcss/vite": "^4.1.17",
+    "moment": "^2.30.1",
     "nuxt": "^4.2.1",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3",

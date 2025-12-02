@@ -4,6 +4,7 @@ defineProps<{
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 	color?: 'neutral' | 'primary' | 'secondary' | 'success' | 'warning'
 	variant?: 'outline' | 'solid' | 'soft' | 'subtle' | 'ghost' | 'link'
+	trailingIcon?: string
 }>()
 </script>
 <template>
@@ -12,6 +13,7 @@ defineProps<{
 		:color="color" 
 		:variant="variant" 
 		:size="size"
+		:trailing-icon="trailingIcon"
 	>
 		<slot />
 	</UButton>

@@ -1,0 +1,42 @@
+<template>
+  <div 
+    class="
+      flex
+      w-full
+      sm:max-w-80
+      justify-between
+      items-center
+      rounded-2xl 
+      border
+      border-slate-200/60
+      hover:border-slate-300/80 
+      p-3 
+      transition-all 
+      duration-500 
+      hover:shadow-lg 
+      hover:shadow-slate-200/40 
+      hover:-translate-y-1 
+      cursor-pointer
+    "
+  >
+    <section>
+      <h1 class="text-2xl font-bold">5</h1>
+      <span class="text-sm uppercase text-slate-400 font-semibold">Assigned orders</span>
+    </section>
+    <section 
+      class="
+        size-10
+        flex 
+        justify-center 
+        items-center 
+        bg-green-100 
+        rounded-2xl
+      "
+    >
+      <UIcon 
+        name="i-lucide-trending-up" 
+        class="size-6 text-green-500" 
+      />
+    </section>
+  </div>
+</template>

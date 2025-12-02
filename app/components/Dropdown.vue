@@ -7,9 +7,10 @@ defineProps<{
 	badgeProps?: {
 		text?: string | number
 		size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
-		color?: 'neutral' | 'primary' | 'secondary' | 'success' | 'warning'
+		color?: 'warning' | 'neutral' | 'primary' | 'secondary' | 'success' | 'info' | 'error' | undefined
 		inset?: boolean
 		show?: boolean
+		ui?: Record<string, unknown>
 	}
 	buttonProps?: {
 		icon?: string
