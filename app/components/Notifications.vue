@@ -5,14 +5,24 @@ const { data } = await useFetch('/api/user/notifications')
 	<Dropdown
 		:badge-props="{ text: 5, size: '3xl', color: 'error', inset: true }"
 		:button-props="{ icon:'i-lucide-bell', color:'neutral', variant:'ghost' }"
-    :ui="{ content: 'min-w-xs max-w-sm' }"
+    	:ui="{ content: 'min-w-xs max-w-sm' }"
 	>
 		<template #content-top>
 			<div class="flex gap-2 justify-between mb-4">
 				<h2 class="font-semibold text-lg">Notifications</h2>
 				<section class="flex gap-1">
-					<Button size="xs" variant="ghost">Mark all as read</Button>
-					<Button size="xs" variant="ghost">Clear all</Button>
+					<Button 
+						size="xs" 
+						variant="ghost"
+					>
+						Mark all as read
+					</Button>
+					<Button 
+						size="xs" 
+						variant="ghost"
+					>
+						Clear all
+					</Button>
 				</section>
 			</div>
 		</template>

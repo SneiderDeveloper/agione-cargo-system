@@ -1,0 +1,20 @@
+export interface OrderCardProps {
+  title: string
+  orderNumber: string
+  priority: 'Low' | 'Medium' | 'High'
+  status: 'Pending' | 'In progress' | 'Completed'
+  totalWeight: number | string
+  totalAwbs: number | string
+  dest: string[]
+  assignedDoor?: string
+  user: {
+    name: string
+    description?: string
+    avatar: {
+      src?: string
+      alt?: string
+    }
+  }
+  seeDetails?: boolean
+  unassigned?: boolean
+}

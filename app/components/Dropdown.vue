@@ -1,27 +1,7 @@
 <script setup lang="ts">
-import type { DropdownMenuItem, DropdownMenuProps } from '@nuxt/ui/'
+import type { DropdownProps } from '#shared/types/dropdownProps'
 
-defineProps<{
-	items?: DropdownMenuItem[]
-	ui?: DropdownMenuProps['ui']
-	badgeProps?: {
-		text?: string | number
-		size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
-		color?: 'warning' | 'neutral' | 'primary' | 'secondary' | 'success' | 'info' | 'error' | undefined
-		inset?: boolean
-		show?: boolean
-		ui?: Record<string, unknown>
-	}
-	buttonProps?: {
-		icon?: string
-		color?: 'neutral' | 'primary' | 'secondary' | 'success' | 'warning'
-		variant?: 'outline' | 'solid' | 'soft' | 'subtle' | 'ghost' | 'link'
-	}
-	avatarProps?: {
-		alt?: string
-		size?: 	'md' | '2xs' | 'xs' | 'sm' | 'lg' | 'xl' | '3xs' | '2xl' | '3xl'
-	}
-}>()
+defineProps<DropdownProps>()
 </script>
 <template>
 	<Badge v-bind="badgeProps">

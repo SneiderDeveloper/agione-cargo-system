@@ -1,24 +1,7 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
-  title: string
-  orderNumber: string
-  priority: 'Low' | 'Medium' | 'High'
-  status: 'Pending' | 'In progress' | 'Completed'
-  totalWeight: number | string
-  totalAwbs: number | string
-  dest: string[]
-  assignedDoor?: string
-  user: {
-    name: string
-    description?: string
-    avatar: {
-      src?: string
-      alt?: string
-    }
-  }
-  seeDetails?: boolean
-  unassigned?: boolean
-}>(), {
+import type { OrderCardProps } from '#shared/types/orderCardProps'
+
+const props = withDefaults(defineProps<OrderCardProps>(), {
   seeDetails: true
 })
 const colorPriority = computed(() => {

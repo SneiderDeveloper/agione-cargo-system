@@ -1,14 +1,7 @@
 <script setup lang="ts">
-defineProps<{
-	title: string
-	description?: string
-	headerClass?: string
-	icon: {
-		name: string
-		backgroundColor?: string
-		color?: string
-	}
-}>()
+import type { SectionContainerProps } from '#shared/types/sectionContainerProps'
+
+defineProps<SectionContainerProps>()
 </script>
 <template>
 	<div class="
@@ -36,15 +29,15 @@ defineProps<{
 					items-center  
 					rounded-lg
 				"
-				:class="icon.backgroundColor || 'bg-slate-200'"
+				:class="icon.backgroundColor || 'bg-slate-400'"
 			>
 				<UIcon 
 					:name="icon.name" 
 					class="size-6" 
-					:class="icon.color" 
+					:class="icon.color || 'text-white'" 
 				/>
 			</div>
-			<div>
+			<div class="flex w-full justify-between items-center">
 				<div>
 					<h3 class="text-lg leading-5">{{ title }}</h3>
 					<span class="text-slate-500 text-sm">{{ description }}</span>

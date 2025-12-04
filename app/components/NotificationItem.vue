@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import moment from 'moment'
-defineProps<{
-	title: string
-	message: string
-	icon?: string
-	isRead?: boolean
-	link?: string
-	createdAt?: Date
-}>()
+import type { NotificationItemProps } from '#shared/types/notificationItemProps'
+
+defineProps<NotificationItemProps>()
 </script>
 <template>
 	<div 

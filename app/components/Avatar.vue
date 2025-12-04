@@ -1,8 +1,7 @@
 <script setup lang="ts">
-defineProps<{
-	alt?: string
-	size?: 	'md' | '2xs' | 'xs' | 'sm' | 'lg' | 'xl' | '3xs' | '2xl' | '3xl'
-}>()
+import type { AvatarProps } from '@nuxt/ui'
+
+defineProps<AvatarProps>()
 </script>
 <template>
   <UAvatar :alt="alt" :size="size" />

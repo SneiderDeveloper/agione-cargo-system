@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import type { TickerProps } from '#shared/types/tickerProps'
+
+withDefaults(defineProps<TickerProps>(), {
+  value: 0,
+  color: 'slate'
+})
+</script>
 <template>
   <div 
     class="
@@ -20,8 +28,12 @@
     "
   >
     <section>
-      <h1 class="text-2xl font-bold">5</h1>
-      <span class="text-sm uppercase text-slate-400 font-semibold">Assigned orders</span>
+      <h1 class="text-2xl font-bold">
+        {{ value }}
+      </h1>
+      <span class="text-sm uppercase text-slate-400 font-semibold">
+        {{ label }}
+      </span>
     </section>
     <section 
       class="
@@ -29,13 +41,14 @@
         flex 
         justify-center 
         items-center 
-        bg-green-100 
         rounded-2xl
       "
+      :class="`bg-${color}-100`"
     >
       <UIcon 
-        name="i-lucide-trending-up" 
-        class="size-6 text-green-500" 
+        :name="icon" 
+        class="size-6"
+        :class="`text-${color}-500`"
       />
     </section>
   </div>

@@ -22,6 +22,7 @@ const sections = computed(() => ([
       name: 'i-lucide-box',
     },
     data: activeOrder.value,
+    actions: true,
   },
   {
     title: 'Next Driver Inline',
@@ -47,8 +48,17 @@ const sections = computed(() => ([
 <template>
   <div class="flex flex-col gap-5">
     <div class="grid grid-cols-2 gap-2">
-      <Ticker />
-      <Ticker />
+      <Ticker 
+        value="5" 
+        label="Assigned orders" 
+        icon="i-lucide-box" 
+      />
+      <Ticker 
+        value="4" 
+        label="Total AWBs" 
+        icon="i-lucide-box" 
+        color="green"
+      />
     </div>
     <template v-for="section in sections">
       <SectionContainer 
@@ -59,6 +69,17 @@ const sections = computed(() => ([
           name: 'i-lucide-box',
         }"
       >
+        <template #actions>
+          <div v-if="section.actions">
+            <Button
+              trailingIcon="i-lucide-plus"
+              variant="soft"
+              color="neutral"
+              size="sm"
+              @click="navigateTo('/warehouse/createorder')"
+            />
+          </div>
+        </template>
         <div v-if="section.data && section.data.length" class="flex flex-col gap-3">
           <template v-for="order in section.data" :key="order.id">
             <OrderCard

@@ -1,14 +1,7 @@
 <script setup lang="ts">
-defineProps<{
-	label: string
-	icon?: string
-	size?: 'sm' | 'md' | 'lg' | 'xs' | 'xl' | undefined
-	color?: 'primary' | 'secondary' | 'success' | 'warning' | 'info' | 'error' | 'neutral' | undefined
-	variant?: 'solid' | 'outline' | 'soft' | 'subtle' | undefined
-	trailingIcon?: string
-	avatar?: any
-	class?: string
-}>()
+import type { BadgeProps } from '@nuxt/ui';
+
+defineProps<BadgeProps>()
 </script>
 <template>
   <UBadge 

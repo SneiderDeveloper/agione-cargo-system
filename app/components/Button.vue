@@ -1,19 +1,12 @@
 <script setup lang="ts">
-defineProps<{
-	icon?: string
-	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-	color?: 'neutral' | 'primary' | 'secondary' | 'success' | 'warning'
-	variant?: 'outline' | 'solid' | 'soft' | 'subtle' | 'ghost' | 'link'
-	trailingIcon?: string
-}>()
+import type { ButtonProps } from '@nuxt/ui';
+
+const props = defineProps<ButtonProps>()
 </script>
 <template>
 	<UButton 
-		:icon="icon" 
-		:color="color" 
-		:variant="variant" 
-		:size="size"
-		:trailing-icon="trailingIcon"
+		v-bind="{ ...props }" 
+		:class="`rounded-lg ${props.class ?? ''}`"
 	>
 		<slot />
 	</UButton>
