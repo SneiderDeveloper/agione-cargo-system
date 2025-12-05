@@ -19,24 +19,12 @@ defineProps<SectionContainerProps>()
 				headerClass
 			]"
 		>
-			<div 
-				v-if="icon.name"
-				class="
-					flex 
-					w-10 
-					h-10 
-					justify-center 
-					items-center  
-					rounded-lg
-				"
-				:class="icon.backgroundColor || 'bg-slate-400'"
-			>
-				<UIcon 
-					:name="icon.name" 
-					class="size-6" 
-					:class="icon.color || 'text-white'" 
-				/>
-			</div>
+      <Icon 
+        v-if="icon.name"
+        :name="icon.name"
+        :class-icon="icon.color"
+        :class-name="icon.backgroundColor"
+      />
 			<div class="flex w-full justify-between items-center">
 				<div>
 					<h3 class="text-lg leading-5">{{ title }}</h3>

@@ -16,7 +16,8 @@ const items = ref([
     },
     {
       label: 'Order history',
-      icon: 'i-lucide-credit-card'
+      icon: 'i-lucide-history',
+      to: '/warehouse/order/history'
     },
     {
       label: 'Settings',

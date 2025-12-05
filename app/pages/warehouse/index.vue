@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const { data } = await useFetch('/api/orders')
+const headerTitle = useState('headerTitle')
+const isNavBack = useState('isNavBack')
 
 const activeOrder = computed(() => {
   const active = data?.value?.find((order: any) => order.active && order.warehouseAgentId)
@@ -44,6 +46,11 @@ const sections = computed(() => ([
     data: unassignedOrders.value,
   },
 ]))
+
+onBeforeMount(() => {
+  headerTitle.value = 'Warehouse Acceptance Operation'
+  isNavBack.value = false
+})
 </script>
 <template>
   <div class="flex flex-col gap-5">
@@ -76,7 +83,7 @@ const sections = computed(() => ([
               variant="soft"
               color="neutral"
               size="sm"
-              @click="navigateTo('/warehouse/createorder')"
+              @click="navigateTo('/warehouse/order/create')"
             />
           </div>
         </template>

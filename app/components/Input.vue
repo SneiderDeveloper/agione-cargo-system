@@ -17,6 +17,7 @@ const { formFieldProps, modelValue, ...inputProps } = props
       @update:model-value="emit('update:modelValue', $event)"
       v-bind="inputProps"
       class="w-full"
+      :ui="{ base: 'rounded-xl' }"
     />
   </UFormField>
 </template>
