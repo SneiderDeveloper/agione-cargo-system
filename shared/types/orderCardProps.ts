@@ -7,6 +7,7 @@ export interface OrderCardProps {
   totalAwbs: number | string
   dest: string[]
   assignedDoor?: string
+  createdAt?: string
   user: {
     name: string
     description?: string

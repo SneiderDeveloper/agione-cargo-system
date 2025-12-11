@@ -111,7 +111,7 @@ const priority = ref<SelectItem[]>([
   <section class="flex flex-col gap-4">
     <div class="flex justify-between items-center">
       <div class="flex gap-2 items-center">
-        <Icon 
+        <IconContainer 
           name="i-lucide-package"
           class-name="bg-purple-400"
           size="sm"

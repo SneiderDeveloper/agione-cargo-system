@@ -1,0 +1,167 @@
+<script setup lang="ts">
+const isBUP = ref(false)
+const activeContainer = ref(false)
+
+const shipmentDetails = [
+  {
+    label: 'Pieces',
+    value: '24',
+    icon: 'i-lucide-box'
+  },
+  {
+    label: 'Weight',
+    value: '320 kg',
+    icon: 'i-lucide-weight'
+  },
+  {
+    label: 'Cubic Meters',
+    value: '1.00 m³',
+    icon: 'i-lucide-ruler'
+  }
+]
+
+const flightDetails = [
+  {
+    label: 'Route',
+    value: 'ORD → BOG',
+    icon: 'i-lucide-map-pin'
+  },
+  {
+    label: 'Flight Number',
+    value: 'CX880',
+    icon: 'i-lucide-plane'
+  },
+  {
+    label: 'Departure Date',
+    value: 'Oct 25, 2025',
+    icon: 'i-lucide-clock'
+  }
+]
+
+const informationCards = [
+  {
+    title: 'Shipment Details',
+    details: shipmentDetails
+  },
+  {
+    title: 'Flight Details',
+    details: flightDetails
+  },
+  {
+    title: 'Nature of Goods',
+    details: [
+      {
+        label: null,
+        value: 'Textile Products',
+        icon: 'i-lucide-file-text'
+      }
+    ]
+  }
+]
+</script>
+<template>
+  <div class="flex flex-col gap-4">
+    <template v-for="card in informationCards" :key="card.title">
+      <InformationCard :title="card.title">
+        <div class="flex justify-between items-center">
+          <template v-for="value in card.details" :key="value.value">
+            <DataWidget 
+              :label="value?.label"
+              :value="value.value"
+              :iconName="value.icon"
+            />
+          </template>
+        </div>
+      </InformationCard>
+    </template>
+    <SectionContainer
+      title="Is this cargo a BUP?"
+      :content="isBUP"
+      :icon="{
+        name: 'i-lucide-shield',
+        color: 'text-blue-500',
+        backgroundColor: 'bg-blue-100'
+      }"
+    >
+      <template #actions>
+        <Switch 
+          v-model="isBUP"
+          color="secondary"
+        />
+      </template>
+      <div class="flex justify-between items-center">
+        <span>Active Container</span>
+        <Switch 
+          v-model="activeContainer"
+          color="secondary"
+        />
+      </div>
+    </SectionContainer>
+    <SectionContainer
+      v-if="activeContainer"
+      title="Container Status Information"
+      description="Record the status of the RNK or RAP container"
+      :icon="{
+        name: 'i-lucide-shield',
+        color: 'text-blue-500',
+        backgroundColor: 'bg-blue-100'
+      }"
+    >
+      <div class="flex flex-col gap-3">
+        <Select 
+          variant="subtle"
+          size="lg"
+          :items="[
+            {
+              label: 'RNK',
+              value: 1
+            },
+            {
+              label: 'RAP',
+              value: 2
+            }
+          ]"
+          placeholder="Select container type"
+          :form-field-props="{
+            label: 'Container Type',
+          }"
+        />
+        <Input 
+          type="text"
+          variant="subtle"
+          size="lg"
+          placeholder="Enter temperature"
+          :form-field-props="{
+            label: 'Temperature (°C)',
+          }"
+        />
+        <Input 
+          type="number"
+          variant="subtle"
+          size="lg"
+          placeholder="Battery Percentage"
+          :form-field-props="{
+            label: 'Battery Percentage (%)',
+          }"
+        />
+      </div>
+    </SectionContainer>
+    <AwbForm />
+    <div class="grid grid-cols-2 items-center gap-3">
+      <Button
+        variant="outline"
+        color="error"
+        size="lg"
+      >
+        Reject Cargo
+      </Button>
+      <Button
+        variant="solid"
+        color="success"
+        size="lg"
+      >
+        Completed Cargo Acceptance
+      </Button>
+    </div>
+  </div>
+</template>

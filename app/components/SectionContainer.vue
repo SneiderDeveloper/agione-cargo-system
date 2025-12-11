@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { SectionContainerProps } from '#shared/types/sectionContainerProps'
 
-defineProps<SectionContainerProps>()
+const props = withDefaults(defineProps<SectionContainerProps>(), {
+  content: true
+})
 </script>
 <template>
 	<div class="
@@ -15,11 +17,12 @@ defineProps<SectionContainerProps>()
 	>
 		<section 
 			:class="[
-				'flex items-center gap-3 p-3 bg-slate-200 rounded-t-2xl',
+				'flex items-center gap-3 p-3 bg-slate-200',
+        props.content ? 'rounded-t-2xl' : 'rounded-2xl',
 				headerClass
 			]"
 		>
-      <Icon 
+      <IconContainer
         v-if="icon.name"
         :name="icon.name"
         :class-icon="icon.color"
@@ -27,7 +30,7 @@ defineProps<SectionContainerProps>()
       />
 			<div class="flex w-full justify-between items-center">
 				<div>
-					<h3 class="text-lg leading-5">{{ title }}</h3>
+					<h3 class="text-lg leading-5 font-semibold">{{ title }}</h3>
 					<span class="text-slate-500 text-sm">{{ description }}</span>
 				</div>
 				<div>
@@ -35,7 +38,7 @@ defineProps<SectionContainerProps>()
 				</div>
 			</div>
 		</section>
-		<section class="p-3">
+		<section v-if="content" class="p-3">
 			<slot />
 		</section>
 	</div>

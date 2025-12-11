@@ -40,9 +40,9 @@ const destString = computed(() => {
         flex 
         items-center
         justify-between
-        border-t 
-        border-x 
-        border-slate-200 
+        border-t-2
+        border-x-2
+        border-slate-100 
         rounded-t-2xl 
         p-3
       "
@@ -80,6 +80,7 @@ const destString = computed(() => {
         variant="soft"
         color="neutral"
         size="sm"
+        @click="navigateTo('/warehouse/order/details/')"
       />
       <Button
         v-if="unassigned"
@@ -91,7 +92,17 @@ const destString = computed(() => {
         Take
       </Button>
     </section>
-    <section class="flex items-start justify-between border border-slate-200 rounded-b-2xl p-3">
+    <section 
+      class="
+        flex 
+        items-start 
+        justify-between 
+        border-2 
+        border-slate-100 
+        rounded-b-2xl 
+        p-3
+      "
+    >
       <div>
         <User
           :name="user.name"

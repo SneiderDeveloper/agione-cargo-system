@@ -98,6 +98,7 @@ onBeforeMount(() => {
               :totalAwbs="order?.awbsSummary?.totalAwbs"
               :dest="order?.awbsSummary?.dest"
               :assignedDoor="order.assignedDoor"
+              :createdAt="order.createdAt"
               :user="{
                 name: order?.driver?.fullName,
                 description: 'Arrived 08:30 AM',

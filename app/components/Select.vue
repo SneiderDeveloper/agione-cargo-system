@@ -1,15 +1,19 @@
 <script setup lang="ts">
-import type { SelectItem, FormFieldProps } from '@nuxt/ui'
+import type { SelectItem, SelectProps, FormFieldProps } from '@nuxt/ui'
 
-defineProps<{
-  modelValue?: string | number,
-  items?: SelectItem[],
+interface SelectPropsExtended extends SelectProps {
+  items?: SelectItem[]
   formFieldProps?: FormFieldProps
-}>()
+}
+
+const props =defineProps<SelectPropsExtended>()
 </script>
 
 <template>
   <UFormField v-bind="formFieldProps">
-    <USelect :model-value="modelValue" :items="items" class="w-48" />
+    <USelect
+      v-bind="props"
+      class="w-full rounded-lg" 
+    />
   </UFormField>
 </template>

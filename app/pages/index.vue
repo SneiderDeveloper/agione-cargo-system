@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { FormSubmitEvent, FormError } from '@nuxt/ui'
+import moment from 'moment'
 
 const state = reactive({
   email: '',
@@ -76,8 +77,6 @@ const handleSubmit = (event: FormSubmitEvent<Schema>) => {
           type="submit" 
           size="lg"
           class="
-            flex 
-            justify-center 
             w-full 
             bg-linear-to-bl 
             from-blue-400 
@@ -89,7 +88,7 @@ const handleSubmit = (event: FormSubmitEvent<Schema>) => {
       </UForm>
     </div>
     <div class="text-center text-sm text-gray-400 mt-8">
-      <p>&copy; 2024 AGI - Alliance Ground International</p>
+      <p>&copy; {{ moment().year() }} AGI - Alliance Ground International</p>
       <p>Secure Cargo Processing Platform</p>
     </div>
   </div>

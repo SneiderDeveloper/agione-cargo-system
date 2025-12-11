@@ -7,7 +7,7 @@ defineProps<DropdownProps>()
 	<Badge v-bind="badgeProps">
 		<UDropdownMenu 
 			:items="items" 
-			:ui="{ ...ui, content: `rounded-2xl p-2 ${ui?.content ?? ''}` }"
+			:ui="{ ...ui, content: `rounded-2xl p-3 ${ui?.content ?? ''}` }"
 		>
 			<Avatar v-if="avatarProps" v-bind="avatarProps" />
 			<Button v-else v-bind="buttonProps" />
