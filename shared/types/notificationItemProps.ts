@@ -4,5 +4,5 @@ export interface NotificationItemProps {
 	icon?: string
 	isRead?: boolean
 	link?: string
-	createdAt?: Date
+	createdAt?: Date | string
 }

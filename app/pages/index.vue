@@ -53,8 +53,7 @@ const handleSubmit = (event: FormSubmitEvent<Schema>) => {
         <Input 
           v-model="state.email"
           placeholder="your.email@agi.com" 
-          type="email" 
-          size="lg"
+          type="email"
           :ui="{ root: 'w-full' }"
           :form-field-props="{
             label: 'Email Address',
@@ -64,8 +63,7 @@ const handleSubmit = (event: FormSubmitEvent<Schema>) => {
         />
         <Input
           v-model="state.password"
-          type="password" 
-          size="lg"
+          type="password"
           :ui="{ root: 'w-full' }"
           :form-field-props="{
             label: 'Password',

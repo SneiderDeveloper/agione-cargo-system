@@ -3,6 +3,7 @@ import type { InputProps } from '#shared/types/InputProps'
 
 const props = withDefaults(defineProps<InputProps>(), {
   variant: 'subtle',
+  size: 'lg',
 })
 const emit = defineEmits<{
   'update:modelValue': [value: string | number]

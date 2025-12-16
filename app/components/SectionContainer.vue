@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<SectionContainerProps>(), {
 			]"
 		>
       <IconContainer
-        v-if="icon.name"
+        v-if="icon"
         :name="icon.name"
         :class-icon="icon.color"
         :class-name="icon.backgroundColor"

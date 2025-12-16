@@ -1,19 +1,30 @@
 <script setup lang="ts">
-import type { SelectItem, SelectProps, FormFieldProps } from '@nuxt/ui'
+import type { SelectProps, FormFieldProps } from '@nuxt/ui'
+
+const model = defineModel()
 
 interface SelectPropsExtended extends SelectProps {
-  items?: SelectItem[]
   formFieldProps?: FormFieldProps
 }
 
-const props =defineProps<SelectPropsExtended>()
+const props = withDefaults(defineProps<SelectPropsExtended>(), {
+  variant: 'subtle',
+  size: 'lg'
+})
 </script>
 
 <template>
+  <div>
   <UFormField v-bind="formFieldProps">
     <USelect
-      v-bind="props"
+      v-model="model"
+      :multiple="multiple"
+      :items="items"
+      :variant="variant"
+      :size="size"
+      :placeholder="placeholder"
       class="w-full rounded-lg" 
     />
   </UFormField>
+  </div>
 </template>

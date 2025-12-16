@@ -3,7 +3,7 @@ export interface SectionContainerProps {
 	description?: string
 	headerClass?: string
 	content?: boolean
-	icon: {
+	icon?: {
 		name: string
 		backgroundColor?: string
 		color?: string

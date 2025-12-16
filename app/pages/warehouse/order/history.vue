@@ -48,7 +48,6 @@ const priority = ref<SelectItem[]>([
       type="text"
       variant="soft"
       icon="i-lucide-search"
-      size="lg"
       :ui="{ root: 'w-full' }"
     />
     <Dropdown 
@@ -71,8 +70,6 @@ const priority = ref<SelectItem[]>([
             v-model="filters.status"
             :items="status"
             placeholder="Select date range"
-            variant="subtle"
-            size="lg"
             :form-field-props="{
               label: 'Status'
             }"
@@ -81,8 +78,6 @@ const priority = ref<SelectItem[]>([
             v-model="filters.priority"
             :items="priority"
             placeholder="Select date range"
-            variant="subtle"
-            size="lg"
             :form-field-props="{
               label: 'Priority'
             }"
@@ -90,7 +85,6 @@ const priority = ref<SelectItem[]>([
           <Input 
             type="date"
             variant="soft"
-            size="lg"
             :form-field-props="{
               label: 'Date Range',
               description: 'From Date'
@@ -99,7 +93,6 @@ const priority = ref<SelectItem[]>([
           <Input 
             type="date"
             variant="soft"
-            size="lg"
             :form-field-props="{
               description: 'To Date'
             }"

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const isBUP = ref(false)
 const activeContainer = ref(false)
+const expan = ref(false)
+const groupMode = ref(false)
 
 const shipmentDetails = [
   {
@@ -109,8 +111,6 @@ const informationCards = [
     >
       <div class="flex flex-col gap-3">
         <Select 
-          variant="subtle"
-          size="lg"
           :items="[
             {
               label: 'RNK',
@@ -128,8 +128,6 @@ const informationCards = [
         />
         <Input 
           type="text"
-          variant="subtle"
-          size="lg"
           placeholder="Enter temperature"
           :form-field-props="{
             label: 'Temperature (°C)',
@@ -137,8 +135,6 @@ const informationCards = [
         />
         <Input 
           type="number"
-          variant="subtle"
-          size="lg"
           placeholder="Battery Percentage"
           :form-field-props="{
             label: 'Battery Percentage (%)',
@@ -146,7 +142,47 @@ const informationCards = [
         />
       </div>
     </SectionContainer>
-    <AwbForm />
+    <SectionContainer
+      title="Warehouse Acceptance Details"
+      description="Enter cargo details for warehouse acceptance"
+      :icon="{
+        name: 'i-lucide-map-pin',
+        color: 'text-blue-500',
+        backgroundColor: 'bg-blue-100'
+      }"
+    >
+      <template #actions>
+        <Button
+          variant="soft"
+          size="sm"
+          icon="i-lucide-boxes"
+          color="secondary"
+          @click="groupMode = !groupMode"
+        />
+      </template>
+      <div v-if="!groupMode" class="flex flex-col gap-3">
+        <AwbForm />
+      </div>
+      <SectionContainer
+        v-if="groupMode"
+        title="Group #1"
+        description="1pieces - 20kg"
+        :content="expan"
+      >
+        <template #actions>
+          <Button
+            variant="soft"
+            size="sm"
+            icon="i-lucide-plus"
+            color="neutral"
+            @click="expan = !expan"
+          />
+        </template>
+        <div class="flex flex-col gap-3">
+          <AwbForm />
+        </div>
+      </SectionContainer>
+    </SectionContainer>
     <div class="grid grid-cols-2 items-center gap-3">
       <Button
         variant="outline"

@@ -8,7 +8,7 @@ interface FileUploadPropsExtended extends FileUploadProps {
 const props = defineProps<FileUploadPropsExtended>()
 </script>
 <template>
-  <UFormField v-bind="props.formFieldProps" class="w-full">
+  <UFormField v-bind="formFieldProps" class="w-full">
     <UFileUpload v-bind="props" :ui="{ base: 'rounded-2xl' }" />
   </UFormField>
 </template>
