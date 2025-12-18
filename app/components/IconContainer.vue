@@ -4,6 +4,7 @@ const props = defineProps<{
   classIcon?: string
   className?: string
   size?: 'xs' | 'sm' | 'md' | 'lg'
+  round?: boolean
 }>()
 
 const sizeClasses = computed(() => {
@@ -23,7 +24,7 @@ const sizeClasses = computed(() => {
       items-center
       bg-slate-400
     "
-    :class="`${sizeClasses.sizeContainer} ${sizeClasses.rounded} ${className ?? ''}`"
+    :class="`${sizeClasses.sizeContainer} ${round ? 'rounded-full' : sizeClasses.rounded } ${className ?? ''}`"
   >
     <UIcon 
       :name="name" 

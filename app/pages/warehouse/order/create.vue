@@ -1,12 +1,5 @@
 <script setup lang="ts">
-const headerTitle = useState('headerTitle')
-const isNavBack = useState('isNavBack')
 const results = ref([])
-
-onBeforeMount(() => {
-  headerTitle.value = 'Create Order'
-  isNavBack.value = true
-})
 
 </script>
 <template>

@@ -14,7 +14,7 @@ defineProps<UserProps>()
         <div v-if="description || chip" class="flex flex-col">
           <span 
             v-if="description" 
-            class="text-base text-slate-500"
+            class="text-slate-500"
           >
             {{ description }}
           </span>

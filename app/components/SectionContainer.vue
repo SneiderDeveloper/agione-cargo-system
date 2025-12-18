@@ -17,26 +17,20 @@ const props = withDefaults(defineProps<SectionContainerProps>(), {
 	>
 		<section 
 			:class="[
-				'flex items-center gap-3 p-3 bg-slate-200',
+				'p-3 bg-slate-200',
         props.content ? 'rounded-t-2xl' : 'rounded-2xl',
 				headerClass
 			]"
 		>
-      <IconContainer
-        v-if="icon"
-        :name="icon.name"
-        :class-icon="icon.color"
-        :class-name="icon.backgroundColor"
-      />
-			<div class="flex w-full justify-between items-center">
-				<div>
-					<h3 class="text-lg leading-5 font-semibold">{{ title }}</h3>
-					<span class="text-slate-500 text-sm">{{ description }}</span>
-				</div>
-				<div>
-					<slot name="actions" />
-				</div>
-			</div>
+      <SectionHeader 
+        :title="title" 
+        :description="description" 
+        :icon="icon"
+      >
+        <template #actions>
+          <slot name="actions" />
+        </template>
+      </SectionHeader>
 		</section>
 		<section v-if="content" class="p-3">
 			<slot />

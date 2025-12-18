@@ -34,12 +34,19 @@ defineProps<{
             variant: 'subtle',
           }"
         />
-        <Button
-          icon="i-lucide-message-circle"
-          variant="soft"
-          color="secondary"
-          size="sm" 
-        />
+        <Modal 
+          :button-props="{
+            icon: 'i-lucide-message-circle',
+            variant: 'soft',
+            color: 'secondary',
+            size: 'sm'
+          }"
+          title="SMS Communication"
+          description="Michael Rodriguez • +1 (555) 0123 • Freightliner Cascadia"
+        >
+          <!-- <SmsCommunication /> -->
+          <p>Hola</p>
+        </Modal>
       </div>
       <Button
         class="flex justify-center"

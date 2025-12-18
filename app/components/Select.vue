@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { SelectProps, FormFieldProps } from '@nuxt/ui'
+import type { SelectProps, FormFieldProps, AcceptableValue } from '@nuxt/ui'
 
-const model = defineModel()
+const model = defineModel<AcceptableValue>()
 
 interface SelectPropsExtended extends SelectProps {
   formFieldProps?: FormFieldProps

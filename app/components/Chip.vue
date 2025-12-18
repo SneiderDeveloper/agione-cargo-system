@@ -12,7 +12,8 @@ defineProps<BadgeProps>()
 		:trailing-icon="trailingIcon"
 		:avatar="avatar"
 		:class="class"
+		:label="label"
 	>
-		{{ label }}
+		<slot />
 	</UBadge>
 </template>

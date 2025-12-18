@@ -1,10 +1,13 @@
 <script setup lang="ts">
 const { data } = await useFetch('/api/order')
 const isIACCCSF = ref(false)
-const checkIn = ref(false)
+const checkIn = useState<boolean>('checkIn', () => false)
+const isModalOpen = useState<boolean>('isModalOpen', () => false)
+const isMatchPhotoID = useState<boolean>('isMatchPhotoID', () => false)
 
 const handleCheck = () => {
-  checkIn.value = true
+  if (!checkIn.value) isModalOpen.value = true
+  if (checkIn.value) isModalOpen.value = true
 }
 </script>
 <template>
@@ -123,5 +126,8 @@ const handleCheck = () => {
     >
       {{checkIn ? 'Checked Out' : 'Check In'}}
     </Button>
+    <LicenseVerificationModal
+      :license-photo="data?.driver?.licensePhoto"
+    />
   </div>
 </template>

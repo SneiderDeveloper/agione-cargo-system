@@ -3,6 +3,7 @@ const isBUP = ref(false)
 const activeContainer = ref(false)
 const expan = ref(false)
 const groupMode = ref(false)
+const isOpenModal = useState<boolean>('isOpenModal', () => false)
 
 const shipmentDetails = [
   {
@@ -195,9 +196,11 @@ const informationCards = [
         variant="solid"
         color="success"
         size="lg"
+        @click="isOpenModal = !isOpenModal"
       >
         Completed Cargo Acceptance
       </Button>
     </div>
   </div>
+  <CargoAcceptanceModal />
 </template>
