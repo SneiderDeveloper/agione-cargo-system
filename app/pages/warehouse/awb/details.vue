@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const isBUP = ref(false)
-const activeContainer = ref(false)
+const activeContainer = useState<boolean>('activeContainer', () => false)
 const expan = ref(false)
 const groupMode = ref(false)
 const isOpenModal = useState<boolean>('isOpenModal', () => false)
@@ -61,6 +61,48 @@ const informationCards = [
     ]
   }
 ]
+
+const group = {
+  statusId: 0,
+  numberUld: 0,
+  contourId: 0,
+  numberOfPieces: 0,
+  weight: 0,
+  cargoDimensions: {
+    length: 0,
+    width: 0,
+    height: 0,
+    perPiece: false,
+    dimensions: [
+      {
+        length: 0,
+        width: 0,
+        height: 0,
+      }
+    ]
+  },
+  packagingTypeId: 0,
+  warehouseLocationId: 0,
+  shipmentEvidencePhotos: [],
+  isCargoDamaged: false,
+  damageDescription: '',
+  additionalNotes: '',
+  ticket: '',
+  status: '', // completed - loaded
+}
+
+const groups = ref<[]>([])
+
+
+const addGroup = () => {
+  groups.value.push({ ...group })
+}
+
+const lessGroup = () => {
+  if (groups.value.length > 1) {
+    groups.value.pop()
+  }
+}
 </script>
 <template>
   <div class="flex flex-col gap-4">
@@ -100,49 +142,7 @@ const informationCards = [
         />
       </div>
     </SectionContainer>
-    <SectionContainer
-      v-if="activeContainer"
-      title="Container Status Information"
-      description="Record the status of the RNK or RAP container"
-      :icon="{
-        name: 'i-lucide-shield',
-        color: 'text-blue-500',
-        backgroundColor: 'bg-blue-100'
-      }"
-    >
-      <div class="flex flex-col gap-3">
-        <Select 
-          :items="[
-            {
-              label: 'RNK',
-              value: 1
-            },
-            {
-              label: 'RAP',
-              value: 2
-            }
-          ]"
-          placeholder="Select container type"
-          :form-field-props="{
-            label: 'Container Type',
-          }"
-        />
-        <Input 
-          type="text"
-          placeholder="Enter temperature"
-          :form-field-props="{
-            label: 'Temperature (°C)',
-          }"
-        />
-        <Input 
-          type="number"
-          placeholder="Battery Percentage"
-          :form-field-props="{
-            label: 'Battery Percentage (%)',
-          }"
-        />
-      </div>
-    </SectionContainer>
+    <ContainerStatusInformationSection />
     <SectionContainer
       title="Warehouse Acceptance Details"
       description="Enter cargo details for warehouse acceptance"
@@ -164,25 +164,50 @@ const informationCards = [
       <div v-if="!groupMode" class="flex flex-col gap-3">
         <AwbForm />
       </div>
-      <SectionContainer
-        v-if="groupMode"
-        title="Group #1"
-        description="1pieces - 20kg"
-        :content="expan"
-      >
-        <template #actions>
-          <Button
-            variant="soft"
-            size="sm"
-            icon="i-lucide-plus"
-            color="neutral"
-            @click="expan = !expan"
-          />
-        </template>
-        <div class="flex flex-col gap-3">
-          <AwbForm />
-        </div>
-      </SectionContainer>
+      <div v-if="groupMode">
+        <section class="flex justify-between items-center mb-2">
+          <span class="text-slate-500 font-semibold">Group 3</span>
+          <div class="flex gap-2">
+            <Button
+              variant="soft"
+              color="neutral"
+              size="sm"
+              icon="i-lucide-minus"
+              @click="lessGroup"
+            />
+            <Button
+              variant="soft"
+              color="neutral"+
+              size="sm"
+              icon="i-lucide-plus"
+              @click="addGroup"
+            />
+          </div>
+        </section>
+        <section class="flex flex-col gap-2">
+          <template v-for="value in groups">
+            <SectionContainer
+              title="Group #1"
+              description="1 pieces - 20kg"
+              size="sm"
+              :content="expan"
+            >
+              <template #actions>
+                <Button
+                  variant="soft"
+                  size="sm"
+                  :icon="`i-lucide-${expan ? 'minus' : 'plus'}`"
+                  color="neutral"
+                  @click="expan = !expan"
+                />
+              </template>
+              <div class="flex flex-col gap-3">
+                <AwbForm />
+              </div>
+            </SectionContainer>
+          </template>
+        </section>
+      </div>
     </SectionContainer>
     <div class="grid grid-cols-2 items-center gap-3">
       <Button

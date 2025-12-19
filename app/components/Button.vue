@@ -6,8 +6,10 @@ const props = defineProps<ButtonProps>()
 <template>
 	<UButton 
 		v-bind="{ ...props }" 
-		:class="`rounded-lg cursor-pointer ${props.class ?? ''}`"
+		:class="`rounded-lg cursor-pointer text-center ${props.class ?? ''}`"
 	>
-    	<slot />
+    <div class="flex w-full justify-center">
+      <slot />
+    </div>
 	</UButton>
 </template>

@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<SectionContainerProps>(), {
         :title="title" 
         :description="description" 
         :icon="icon"
+		    :size="size"
       >
         <template #actions>
           <slot name="actions" />

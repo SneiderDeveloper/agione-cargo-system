@@ -32,6 +32,12 @@ const views = [
     description: 'The cargo has been officially accepted with digital signature confirmation. Choose your next action below.'
   }
 ]
+
+onBeforeUnmount(() => {
+  // Reset modal state on unmount
+  isOpenModal.value = false
+  view.value = 0
+})
 </script>
 <template>
   <Modal
