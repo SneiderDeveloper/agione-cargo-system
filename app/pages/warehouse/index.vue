@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const { data } = await useFetch('/api/orders')
+import type { Order } from '#shared/types/order'
+
+const { data } = await useFetch<Order[]>('/api/orders')
 const headerTitle = useState('headerTitle')
 const isNavBack = useState('isNavBack')
 
@@ -90,7 +92,8 @@ onBeforeMount(() => {
         <div v-if="section.data && section.data.length" class="flex flex-col gap-3">
           <template v-for="order in section.data" :key="order.id">
             <OrderCard
-              :title="order.truckCompany"
+              :id="order.id"
+              :title="order?.truckCompany"
               :orderNumber="order.code"
               :priority="order.priority"
               :status="order.status"

@@ -1,4 +1,5 @@
 export interface OrderCardProps {
+  id: number
   title: string
   orderNumber: string
   priority: 'Low' | 'Medium' | 'High'

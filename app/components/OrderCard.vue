@@ -80,7 +80,7 @@ const destString = computed(() => {
         variant="soft"
         color="neutral"
         size="sm"
-        @click="navigateTo('/warehouse/order/details/')"
+        @click="navigateTo(`/warehouse/order/details/${id}`)"
       />
       <Button
         v-if="unassigned"
@@ -103,7 +103,7 @@ const destString = computed(() => {
         p-3
       "
     >
-      <div>
+      <!-- <div> -->
         <User
           :name="user.name"
           :description="user.description"
@@ -119,7 +119,7 @@ const destString = computed(() => {
             variant: 'subtle',
           }"
         />
-      </div>
+      <!-- </div> -->
       <Chip
         v-if="assignedDoor"
         :label="assignedDoor"

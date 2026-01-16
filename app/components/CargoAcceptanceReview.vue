@@ -20,7 +20,7 @@ const actions = [
 const handleClose = () => {
   isOpenModal.value = false
   setTimeout(() => {
-    // Se espera a cambiar de vista 
+    // We are waiting to change our perspective.
     view.value = 0
   }, 500);
 }
