@@ -26,36 +26,38 @@ const handleClose = () => {
 }
 </script>
 <template>
-  <div class="flex flex-col gap-2">
-    <template v-for="index in actions" :key="index.label">
-      <div 
-        class="
-          flex 
-          gap-3
-          items-center
-          bg-slate-100 
-          p-3 
-          border 
-          border-slate-200 
-          rounded-2xl
-        "
-      >
-        <IconContainer
-          :name="index.icon"
-          class-icon="text-green-500"
-          class-name="bg-green-100"
-          size="sm"
-        />
-        <span>{{ index.label }}</span>
-      </div>
-    </template>
-  </div>
-  <div class="grid grid-cols-2 gap-2">
-    <Button size="lg" variant="outline" @click="handleClose">
-      Cancel
-    </Button>
-    <Button size="lg" @click="view = 2">
-      Continue
-    </Button>
+  <div>
+    <div class="flex flex-col gap-2">
+      <template v-for="index in actions" :key="index.label">
+        <div 
+          class="
+            flex 
+            gap-3
+            items-center
+            bg-slate-100 
+            p-3 
+            border 
+            border-slate-200 
+            rounded-2xl
+          "
+        >
+          <IconContainer
+            :name="index.icon"
+            class-icon="text-green-500"
+            class-name="bg-green-100"
+            size="sm"
+          />
+          <span>{{ index.label }}</span>
+        </div>
+      </template>
+    </div>
+    <div class="grid grid-cols-2 gap-2">
+      <Button size="lg" variant="outline" @click="handleClose">
+        Cancel
+      </Button>
+      <Button size="lg" @click="view = 2">
+        Continue
+      </Button>
+    </div>
   </div>
 </template>

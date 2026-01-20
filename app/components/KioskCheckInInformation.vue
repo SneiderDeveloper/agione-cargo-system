@@ -1,19 +1,25 @@
 <script setup lang="ts">
-defineProps<{
-  createdAt: string
+import moment from 'moment'
+
+const props = defineProps<{
+  createdAt: string | undefined
 }>()
+
+const date = props.createdAt ? moment(props.createdAt).format('MMM D, YYYY') : ''
+const time = props.createdAt ? moment(props.createdAt).format('hh:mm A') : ''
+
 </script>
 <template>
   <InformationCard title="Kiosk Check In">
     <div class="flex justify-between items-center">
       <DataWidget 
         iconName="i-lucide-box"
-        value="Sep 2, 2025"
+        :value="date"
         label="Date"
       />
       <DataWidget 
         iconName="i-lucide-box"
-        value="08:30 AM"
+        :value="time"
         label="Time"
       />
     </div>

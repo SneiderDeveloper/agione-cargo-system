@@ -5,7 +5,7 @@ defineProps<{
     fullName: string | undefined
     licensePhoto: string | undefined
   }
-  createdAt: string
+  createdAt: string | undefined
   verifiedDriver: boolean
 }>()
 </script>
@@ -59,7 +59,7 @@ defineProps<{
       </Button>
       <Image 
         v-if="showLicense"
-        :src="driver.licensePhoto" 
+        :src="driver?.licensePhoto" 
         alt="Driver License"
       />
     </div>

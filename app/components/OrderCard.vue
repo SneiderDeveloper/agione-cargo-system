@@ -80,7 +80,7 @@ const destString = computed(() => {
         variant="soft"
         color="neutral"
         size="sm"
-        @click="navigateTo(`/warehouse/order/details/${id}`)"
+        @click="navigateTo(`/warehouse/order/${id}`)"
       />
       <Button
         v-if="unassigned"

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { BadgeProps } from '@nuxt/ui'
 
 const props = defineProps<{
+  id: number
   title?: string
   description?: string
   status?: 'Pending' | 'In progress' | 'Completed'
@@ -41,7 +41,7 @@ const colorStatus = computed(() => {
         variant="soft"
         color="neutral"
         size="sm"
-        @click="navigateTo('/warehouse/awb/details/')"
+        @click="navigateTo(`/warehouse/awb/${id}`)"
       />
     </section>
     <section class="flex gap-2">

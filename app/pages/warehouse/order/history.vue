@@ -42,100 +42,102 @@ const priority = ref<SelectItem[]>([
 ])
 </script>
 <template>
-  <section class="flex items-center gap-2 mb-4">
-    <Input
-      placeholder="Search by order number or driver name" 
-      type="text"
-      variant="soft"
-      icon="i-lucide-search"
-      :ui="{ root: 'w-full' }"
-    />
-    <Dropdown 
-      :badge-props="{
-        show: false
-      }"
-      :button-props="{
-        variant: 'soft',
-        size: 'lg',
-        icon: 'i-lucide-filter',
-        color: 'neutral',
-      }"
-    >
-      <template #content-top>
-        <h2 class="text-base font-semibold mb-2">Filter options</h2>
-      </template>
-      <template #content-bottom>
-        <div class="flex flex-col gap-4">
-          <Select
-            v-model="filters.status"
-            :items="status"
-            placeholder="Select date range"
-            :form-field-props="{
-              label: 'Status'
-            }"
+  <div>
+    <section class="flex items-center gap-2 mb-4">
+      <Input
+        placeholder="Search by order number or driver name" 
+        type="text"
+        variant="soft"
+        icon="i-lucide-search"
+        :ui="{ root: 'w-full' }"
+      />
+      <Dropdown 
+        :badge-props="{
+          show: false
+        }"
+        :button-props="{
+          variant: 'soft',
+          size: 'lg',
+          icon: 'i-lucide-filter',
+          color: 'neutral',
+        }"
+      >
+        <template #content-top>
+          <h2 class="text-base font-semibold mb-2">Filter options</h2>
+        </template>
+        <template #content-bottom>
+          <div class="flex flex-col gap-4">
+            <Select
+              v-model="filters.status"
+              :items="status"
+              placeholder="Select date range"
+              :form-field-props="{
+                label: 'Status'
+              }"
+            />
+            <Select
+              v-model="filters.priority"
+              :items="priority"
+              placeholder="Select date range"
+              :form-field-props="{
+                label: 'Priority'
+              }"
+            />
+            <Input 
+              type="date"
+              variant="soft"
+              :form-field-props="{
+                label: 'Date Range',
+                description: 'From Date'
+              }"
+            />
+            <Input 
+              type="date"
+              variant="soft"
+              :form-field-props="{
+                description: 'To Date'
+              }"
+            />
+          </div>
+        </template>
+      </Dropdown>
+    </section>
+    <section class="flex flex-col gap-4">
+      <div class="flex justify-between items-center">
+        <div class="flex gap-2 items-center">
+          <IconContainer 
+            name="i-lucide-package"
+            class-name="bg-purple-400"
+            size="sm"
           />
-          <Select
-            v-model="filters.priority"
-            :items="priority"
-            placeholder="Select date range"
-            :form-field-props="{
-              label: 'Priority'
-            }"
-          />
-          <Input 
-            type="date"
-            variant="soft"
-            :form-field-props="{
-              label: 'Date Range',
-              description: 'From Date'
-            }"
-          />
-          <Input 
-            type="date"
-            variant="soft"
-            :form-field-props="{
-              description: 'To Date'
-            }"
-          />
+          <h2>Historical Orders</h2>
         </div>
-      </template>
-    </Dropdown>
-  </section>
-  <section class="flex flex-col gap-4">
-    <div class="flex justify-between items-center">
-      <div class="flex gap-2 items-center">
-        <IconContainer 
-          name="i-lucide-package"
-          class-name="bg-purple-400"
-          size="sm"
-        />
-        <h2>Historical Orders</h2>
+        <div>
+          <Chip label="5 orders" variant="soft" class="bg-purple-400 text-white"/>
+        </div>
       </div>
-      <div>
-        <Chip label="5 orders" variant="soft" class="bg-purple-400 text-white"/>
+      <div v-if="data && data.length" class="flex flex-col gap-3">
+        <template v-for="order in data" :key="order.id">
+          <OrderCard
+            :title="order.truckCompany"
+            :orderNumber="order.code"
+            :priority="order.priority"
+            :status="order.status"
+            :totalWeight="order?.awbsSummary?.totalWeight"
+            :totalAwbs="order?.awbsSummary?.totalAwbs"
+            :dest="order?.awbsSummary?.dest"
+            :assignedDoor="order.assignedDoor"
+            :user="{
+              name: order?.driver?.fullName,
+              description: 'Arrived 08:30 AM',
+              avatar: {
+                alt: order?.driver?.fullName
+              }
+            }"
+            :seeDetails="false"
+          />
+        </template>
       </div>
-    </div>
-    <div v-if="data && data.length" class="flex flex-col gap-3">
-      <template v-for="order in data" :key="order.id">
-        <OrderCard
-          :title="order.truckCompany"
-          :orderNumber="order.code"
-          :priority="order.priority"
-          :status="order.status"
-          :totalWeight="order?.awbsSummary?.totalWeight"
-          :totalAwbs="order?.awbsSummary?.totalAwbs"
-          :dest="order?.awbsSummary?.dest"
-          :assignedDoor="order.assignedDoor"
-          :user="{
-            name: order?.driver?.fullName,
-            description: 'Arrived 08:30 AM',
-            avatar: {
-              alt: order?.driver?.fullName
-            }
-          }"
-          :seeDetails="false"
-        />
-      </template>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>

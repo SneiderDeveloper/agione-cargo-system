@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const edit = ref(false)
 defineProps<{
-  doorName: string
+  doorName: string | number | undefined
 }>()
 </script>
 <template>

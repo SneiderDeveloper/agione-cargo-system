@@ -15,16 +15,16 @@ const props = withDefaults(defineProps<SelectPropsExtended>(), {
 
 <template>
   <div>
-  <UFormField v-bind="formFieldProps">
-    <USelect
-      v-model="model"
-      :multiple="multiple"
-      :items="items"
-      :variant="variant"
-      :size="size"
-      :placeholder="placeholder"
-      class="w-full rounded-lg" 
-    />
-  </UFormField>
+    <UFormField v-bind="formFieldProps">
+      <USelect
+        v-model="model"
+        :multiple="multiple"
+        :items="items"
+        :variant="variant"
+        :size="size"
+        :placeholder="placeholder"
+        class="w-full rounded-lg" 
+      />
+    </UFormField>
   </div>
 </template>

@@ -1,9 +1,5 @@
-<script setup lang="ts">
-const activeContainer = useState<boolean>('activeContainer')
-</script>
 <template>
   <SectionContainer
-    v-if="activeContainer"
     title="Container Status Information"
     description="Record the status of the RNK or RAP container"
     :icon="{

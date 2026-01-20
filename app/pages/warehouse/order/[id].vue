@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { data } = await useFetch('/api/order')
+const route = useRoute()
+const { data } = await useFetch<Order>(`/api/order/${route.params.id}`)
 const isIACCCSF = ref(false)
 const checkIn = useState<boolean>('checkIn', () => false)
 const isModalOpen = useState<boolean>('isModalOpen', () => false)
@@ -109,11 +110,12 @@ const handleCheck = () => {
         />
       </template>
       <div class="flex flex-col gap-3">
-        <template v-for="value in [1,2,3]">
-          <AwbCard 
-            title="AWB #1234567890"
-            description="Electronics - 15 kg"
-            status="In progress"
+        <template v-for="awb in data?.awbs" :key="awb.id">
+          <AwbCard
+            :id="awb.id"
+            :title="`AWB #${awb.code}`"
+            :description="awb.natureOfGoods"
+            :status="awb.status"
           />
         </template>
       </div>
