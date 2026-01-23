@@ -1,3 +1,39 @@
+export interface AwbDetails {
+  numberUld: string,
+  contourId: number,
+  numberOfPieces: number,
+  weight: number,
+  perPiece: boolean,
+  pieces: [
+    {
+      length: number,
+      width: number,
+      height: number,
+      isCargoDamaged: boolean,
+      damageDescription: string,
+    }
+  ],
+  packagingTypeId: number,
+  warehouseLocationId: number,
+  shipmentEvidencePhotos: string[],
+  isCargoDamaged: boolean,
+  damageDescription?: string,
+  additionalNotes: string,
+  ticket: string,
+}
+
+export interface Group extends AwbDetails {
+  id: number,
+  statusId: number,
+  status: string,
+}
+
+export interface ActiveContainer {
+  containerTypeId: number,
+  temperature: number,
+  batteryPercentage: number,
+}
+
 export interface Awb {
   driverId: number,
   statusId: number,
@@ -17,70 +53,11 @@ export interface Awb {
   departureDate: string,
   natureOfGoods: string,
   isBUP: boolean,
-  activeContainer?: {
-    containerTypeId: number,
-    temperature: number,
-    batteryPercentage: number,
-  },
+  isActiveContainer: boolean,
+  activeContainer?: ActiveContainer,
   groupMode: boolean, // ?
-  acceptanceDetails: { // ?
-    numberUld: string,
-    contourId: number,
-    numberOfPieces: number,
-    weight: number,
-    cargoDimensions: {
-      length: number,
-      width: number,
-      height: number,
-      perPiece: boolean,
-      dimensions: [
-        {
-          length: number,
-          width: number,
-          height: number,
-        }
-      ]
-    },
-    packagingTypeId: number,
-    warehouseLocationId: number,
-    shipmentEvidencePhotos: string[],
-    isCargoDamaged: boolean,
-    damageDescription?: string,
-    additionalNotes: string,
-    ticket: string,
-    // status: string,
-  },
-  groups: [
-    {
-      id: number,
-      statusId: number,
-      numberUld: string,
-      contourId: number,
-      numberOfPieces: number,
-      weight: number,
-      cargoDimensions: {
-        length: number,
-        width: number,
-        height: number,
-        perPiece: boolean,
-        dimensions: [
-          {
-            length: number,
-            width: number,
-            height: number,
-          }
-        ]
-      },
-      packagingTypeId: number,
-      warehouseLocationId: number,
-      shipmentEvidencePhotos: string[],
-      isCargoDamaged: boolean,
-      damageDescription?: string,
-      additionalNotes: string,
-      ticket: string,
-      status: string, // completed - loaded
-    }
-  ],
+  acceptanceDetails: AwbDetails,
+  groups: Group[],
   shc: number[],
   pendingDgCheck: boolean, // ?
   warehouseAgentCheck: {

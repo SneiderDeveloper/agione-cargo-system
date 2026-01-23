@@ -18,8 +18,9 @@ const awbs = [
     departureDate: new Date("2024-06-01T10:00:00Z"),
     natureOfGoods: "Electronics",
     isBUP: true,
+    isActiveContainer: true,
     activeContainer: {
-      containerTypeId: 3,
+      containerTypeId: 2,
       temperature: 5.5,
       batteryPercentage: 80,
     },
@@ -29,24 +30,19 @@ const awbs = [
       contourId: 4,
       numberOfPieces: 10,
       weight: 1200.5,
-      cargoDimensions: {
-        length: 120,
-        width: 80,
-        height: 60,
-        perPiece: false,
-        dimensions: [
-          {
-            length: 120,
-            width: 80,
-            height: 60,
-          }
-        ]
-      },
+      perPiece: false,
+      pieces: [
+        {
+          length: 120,
+          width: 80,
+          height: 60,
+          isCargoDamaged: false,
+          damageDescription: "",
+        }
+      ],
       packagingTypeId: 2,
       warehouseLocationId: 7,
       shipmentEvidencePhotos: ["photo1.jpg", "photo2.jpg"],
-      isCargoDamaged: false,
-      damageDescription: undefined,
       additionalNotes: "Handle with care",
       ticket: "TCKT-001",
     },
@@ -58,24 +54,19 @@ const awbs = [
         contourId: 5,
         numberOfPieces: 5,
         weight: 600.25,
-        cargoDimensions: {
-          length: 100,
-          width: 70,
-          height: 50,
-          perPiece: true,
-          dimensions: [
-            {
-              length: 100,
-              width: 70,
-              height: 50,
-            }
-          ]
-        },
+        perPiece: false,
+        pieces: [
+          {
+            length: 120,
+            width: 80,
+            height: 60,
+            isCargoDamaged: false,
+            damageDescription: "",
+          }
+        ],
         packagingTypeId: 3,
         warehouseLocationId: 8,
-        shipmentEvidencePhotos: ["photo3.jpg"],
-        isCargoDamaged: false,
-        damageDescription: undefined,
+        shipmentEvidencePhotos: [],
         additionalNotes: "No issues",
         ticket: "TCKT-002",
         status: "completed",

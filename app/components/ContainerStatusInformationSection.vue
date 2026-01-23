@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import type { Awb } from '#shared/types/awb'
+
+const awbRecord = useState<Awb>('awbRecord')
+</script>
 <template>
   <SectionContainer
     title="Container Status Information"
@@ -9,7 +14,8 @@
     }"
   >
     <div class="flex flex-col gap-3">
-      <Select 
+      <Select
+        v-model="awbRecord.activeContainer.containerTypeId"
         :items="[
           {
             label: 'RNK',
@@ -25,7 +31,8 @@
           label: 'Container Type',
         }"
       />
-      <Input 
+      <Input
+        v-model="awbRecord.activeContainer.temperature"
         type="text"
         placeholder="Enter temperature"
         :form-field-props="{
@@ -33,6 +40,7 @@
         }"
       />
       <Input 
+        v-model="awbRecord.activeContainer.batteryPercentage"
         type="number"
         placeholder="Battery Percentage"
         :form-field-props="{

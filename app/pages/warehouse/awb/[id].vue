@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import moment from 'moment'
-import type { Awb } from '#shared/types/awb'
+import type { Awb, Group } from '#shared/types/awb'
 
 const route = useRoute()
-const { data } = await useFetch(`/api/awb/${route.params.id}`)
-const isBUP = ref(data.value?.isBUP || false)
-const activeContainer = ref(data.value?.activeContainer)
+const { data } = await useFetch<Awb>(`/api/awb/${route.params.id}`)
 const expan = ref(false)
 const groupMode = ref(false)
 const isOpenModal = useState<boolean>('isOpenModal', () => false)
-const awbRecord = useState<Awb>('awbRecord', () => data.value)
+const awbRecord = useState<Awb>('awbRecord', () => data.value || {} as Awb)
 
 const shipmentDetails = [
   {
@@ -26,25 +24,30 @@ const shipmentDetails = [
     label: 'Cubic Meters',
     value: data.value?.cubicMeters + ' m³',
     icon: 'i-lucide-ruler'
+  },
+  {
+    label: 'Nature of Goods',
+    value: data.value?.natureOfGoods,
+    icon: 'i-lucide-file-text'
   }
 ]
 
 const flightDetails = [
   {
-    label: 'Route',
-    value: 'ORD → BOG',
-    icon: 'i-lucide-map-pin'
-  },
-  {
-    label: 'Flight Number',
+    label: 'Carrier',
     value: data.value?.flightNumber,
     icon: 'i-lucide-plane'
   },
   {
-    label: 'Departure Date',
-    value: moment(data.value?.departureDate).format('MMM DD, YYYY'),
-    icon: 'i-lucide-clock'
-  }
+    label: 'Flight/Date',
+    value: `${data.value?.flightNumber}/${moment(data.value?.departureDate).format('DDMMMYYYY')}`,
+    icon: 'i-lucide-plane'
+  },
+  {
+    label: 'Route',
+    value: 'ORD → BOG',
+    icon: 'i-lucide-map-pin'
+  },
 ]
 
 const informationCards = [
@@ -56,21 +59,12 @@ const informationCards = [
     title: 'Flight Details',
     details: flightDetails
   },
-  {
-    title: 'Nature of Goods',
-    details: [
-      {
-        label: null,
-        value: data.value?.natureOfGoods,
-        icon: 'i-lucide-file-text'
-      }
-    ]
-  }
 ]
 
-const group = {
+const group: Group = {
+  id: 0,
   statusId: 0,
-  numberUld: 0,
+  numberUld: '',
   contourId: 0,
   numberOfPieces: 0,
   weight: 0,
@@ -84,6 +78,7 @@ const group = {
         length: 0,
         width: 0,
         height: 0,
+        isCargoDamaged: false,
       }
     ]
   },
@@ -94,10 +89,11 @@ const group = {
   damageDescription: '',
   additionalNotes: '',
   ticket: '',
-  status: '', // completed - loaded
+  status: '',
+  expan: false
 }
 
-const groups = ref<[]>(data.value?.groups || [ { ...group } ])
+const groups = ref<Groups[]>(awbRecord.value?.groups || [ { ...group } ])
 
 
 const addGroup = () => {
@@ -144,12 +140,14 @@ const lessGroup = () => {
         <div class="flex justify-between items-center">
           <span>Active Container</span>
           <Switch 
-            v-model="awbRecord.activeContainer"
+            v-model="awbRecord.isActiveContainer"
             color="secondary"
           />
         </div>
       </SectionContainer>
-      <ContainerStatusInformationSection v-show="awbRecord.activeContainer" />
+      <ContainerStatusInformationSection 
+        v-show="awbRecord.isBUP && awbRecord.isActiveContainer" 
+      />
       <SectionContainer
         title="Warehouse Acceptance Details"
         description="Enter cargo details for warehouse acceptance"
@@ -169,11 +167,11 @@ const lessGroup = () => {
           />
         </template>
         <div v-if="!groupMode" class="flex flex-col gap-3">
-          <AwbForm />
+          <AwbDetails :data="awbRecord?.acceptanceDetails" />
         </div>
         <div v-if="groupMode">
-          <section class="flex justify-between items-center mb-2">
-            <span class="text-slate-500 font-semibold">Group 3</span>
+          <section class="flex justify-between items-center mb-3">
+            <span class="text-slate-500 font-semibold">{{ awbRecord.groups.length }} Group</span>
             <div class="flex gap-2">
               <Button
                 variant="soft"
@@ -195,21 +193,21 @@ const lessGroup = () => {
             <template v-for="group in awbRecord.groups">
               <SectionContainer
                 title="Group #1"
-                :description="`${group.numberOfPieces} pieces - ${group.weight} kg`"
+                :description="`${group.numberOfPieces} pieces • ${group.weight} kg`"
                 size="sm"
-                :content="expan"
+                :content="group.expan"
               >
                 <template #actions>
                   <Button
                     variant="soft"
                     size="sm"
-                    :icon="`i-lucide-${expan ? 'minus' : 'plus'}`"
+                    :icon="`i-lucide-${group.expan ? 'chevron-up' : 'chevron-down'}`"
                     color="neutral"
-                    @click="expan = !expan"
+                    @click="group.expan = !group.expan"
                   />
                 </template>
                 <div class="flex flex-col gap-3">
-                  <AwbForm />
+                  <AwbDetails :data="group" />
                 </div>
               </SectionContainer>
             </template>
