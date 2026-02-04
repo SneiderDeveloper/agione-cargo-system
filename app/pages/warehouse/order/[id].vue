@@ -1,6 +1,12 @@
 <script setup lang="ts">
 const route = useRoute()
-const { data } = await useFetch<Order>(`/api/order/${route.params.id}`)
+const { data, status } = await useLazyFetch<Order>(`/api/order/${route.params.id}`, {
+  // Desactiva el cache para ver el delay real
+  key: `order-${route.params.id}-${Date.now()}`,
+  // O usa esto para refrescar en cada visita:
+  // server: false,
+  // lazy: true,
+})
 const isIACCCSF = ref(false)
 const checkIn = useState<boolean>('checkIn', () => false)
 const isModalOpen = useState<boolean>('isModalOpen', () => false)
@@ -10,9 +16,23 @@ const handleCheck = () => {
   if (!checkIn.value) isModalOpen.value = true
   if (checkIn.value) isModalOpen.value = true
 }
+
+// Observa el cambio de status
+watch(status, (newStatus) => {
+  console.log('Status changed:', newStatus)
+})
+
+console.log({ initialStatus: status.value, hasData: !!data.value })
 </script>
 <template>
-  <div class="flex flex-col gap-5">
+  <!-- Loading State -->
+  <div v-if="status === 'pending'" class="flex flex-col items-center justify-center p-8 gap-4">
+    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+    <p class="text-slate-600">Loading order information...</p>
+  </div>
+
+  <!-- Content -->
+  <div v-else class="flex flex-col gap-5">
     <OrderStatusBanner 
       v-if="checkIn"
       total-awbs="23"
@@ -104,7 +124,7 @@ const handleCheck = () => {
     >
       <template #actions>
         <Chip
-          label="23 AWB's"
+          :label="`${data?.awbs?.length} AWB's`"
           color="info"
           variant="soft"
         />
@@ -118,6 +138,12 @@ const handleCheck = () => {
             :status="awb.status"
           />
         </template>
+        <div 
+          v-if="data?.awbs?.length === 0"
+          class="text-slate-500 font-semibold p-4 text-center"
+        >
+          There are no AWBs assigned to this order.
+        </div>
       </div>
     </SectionContainer>
     <Button
