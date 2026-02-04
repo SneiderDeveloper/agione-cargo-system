@@ -4,7 +4,14 @@ const headerTitle = useState('headerTitle', () => '')
 const isNavBack = useState('isNavBack', () => false)
 const route = useRoute()
 
-const config = {
+interface Config {
+  [key: string]: {
+    title: string
+    isNavBack: boolean
+  }
+}
+
+const config: Config = {
    '/warehouse': {
       title: 'Warehouse Acceptance Operation',
       isNavBack: false

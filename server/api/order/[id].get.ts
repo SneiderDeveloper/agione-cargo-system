@@ -70,5 +70,6 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  return order
+  return await new Promise((resolve) => setTimeout(() => resolve(order), 10000))
+  // return order
 })

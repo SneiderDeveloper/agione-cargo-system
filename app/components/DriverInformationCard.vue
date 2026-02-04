@@ -27,12 +27,13 @@ defineProps<{
           }"
           size="2xl"
           :chip="{
-            label: 'Waiting 47 min',
+            label: 'Waiting 48 min',
             icon: 'i-lucide-clock',
             size: 'md',
             color: 'warning',
             variant: 'subtle',
           }"
+          :isLoading="false"
         />
         <Modal 
           :button-props="{

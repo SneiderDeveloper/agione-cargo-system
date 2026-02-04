@@ -3,6 +3,7 @@
     label?: string | null
     value?: string | number
     iconName?: string
+    isLoading?: boolean
   }>()
 </script>
 <template>
@@ -11,7 +12,7 @@
       :name="iconName"
       size="sm"
     />
-    <section class="flex flex-col">
+    <section v-if="!isLoading" class="flex flex-col">
       <span v-if="label" class="text-xs text-slate-500">
         {{ label }}
       </span>
@@ -19,5 +20,12 @@
         {{ value }}
       </span>
     </section>
+    <div 
+      v-if="isLoading"
+      class="grid gap-1.5"
+    >
+      <USkeleton class="h-3 w-24" />
+      <USkeleton class="h-5 w-32" />
+    </div>
   </div>
 </template>
