@@ -1,34 +1,42 @@
 <script setup lang="ts">
 import type { UserProps } from '#shared/types/userProps'
 
-defineProps<UserProps>()
+withDefaults(defineProps<UserProps>(), {
+  isLoading: false,
+  name: '',
+  size: 'md',
+  avatar: {
+    alt: '',
+  }
+})
 </script>
 <template>
   <div>
-    <UUser
-      :name="name"
-      :avatar="avatar"
-      :size="size"
-      v-if="!isLoading"
-    >
-      <template #description>
-        <ClientOnly>
-          <div v-if="description || chip" class="flex flex-col">
-            <span 
-              v-if="description" 
-              class="text-slate-500"
-            >
-              {{ description }}
-            </span>
-            <Chip 
-              v-if="chip" 
-              v-bind="chip" 
-              class="mt-1.5"
-            />
-          </div>
-        </ClientOnly>
-      </template>
-    </UUser>
+    <div v-if="!isLoading">
+      <ClientOnly>
+        <UUser
+          :name="name"
+          :avatar="avatar"
+          :size="size"
+        >
+          <template #description>
+              <div v-show="description || chip" class="flex flex-col">
+                <span 
+                  v-show="description" 
+                  class="text-slate-500"
+                >
+                  {{ description }}
+                </span>
+                <Chip 
+                  v-show="chip" 
+                  v-bind="chip" 
+                  class="mt-1.5"
+                />
+              </div>
+          </template>
+        </UUser>
+      </ClientOnly>
+    </div>
     <div 
       v-if="isLoading"
       class="flex items-center gap-4"

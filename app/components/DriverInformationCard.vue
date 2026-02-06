@@ -1,13 +1,22 @@
 <script setup lang="ts">
 const showLicense = ref(false)
-defineProps<{
+withDefaults(defineProps<{
   driver: {
     fullName: string | undefined
     licensePhoto: string | undefined
   }
   createdAt: string | undefined
   verifiedDriver: boolean
-}>()
+}>(), {
+  driver: () => ({
+    fullName: '',
+    licensePhoto: ''
+  }),
+  createdAt: '',
+  verifiedDriver: false
+})
+
+const loading = useState<boolean>('loading')
 </script>
 <template>
   <InformationCard 
@@ -21,9 +30,9 @@ defineProps<{
     <div class="flex flex-col gap-3">
       <div class="flex justify-between items-center">
         <User
-          :name="driver.fullName"
+          :name="driver?.fullName || ''"
           :avatar="{
-            alt: driver.fullName,
+            alt: driver?.fullName || '',
           }"
           size="2xl"
           :chip="{
@@ -33,20 +42,20 @@ defineProps<{
             color: 'warning',
             variant: 'subtle',
           }"
-          :isLoading="false"
+          :isLoading="loading"
         />
         <Modal 
           :button-props="{
             icon: 'i-lucide-message-circle',
             variant: 'soft',
             color: 'secondary',
-            size: 'sm'
+            size: 'sm',
+            disabled: loading,
           }"
           title="SMS Communication"
           description="Michael Rodriguez • +1 (555) 0123 • Freightliner Cascadia"
         >
           <!-- <SmsCommunication /> -->
-          <p>Hola</p>
         </Modal>
       </div>
       <Button

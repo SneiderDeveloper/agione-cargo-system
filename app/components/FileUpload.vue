@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import type { FileUploadProps, FormFieldProps } from '@nuxt/ui'
 
-const model = defineModel()
+defineProps<FileUploadPropsExtended>()
+const model = defineModel<File | null>()
 
 interface FileUploadPropsExtended extends FileUploadProps {
   formFieldProps?: FormFieldProps
 }
-
-defineProps<FileUploadPropsExtended>()
 
 </script>
 <template>

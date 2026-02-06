@@ -16,7 +16,7 @@ const orders = [
     totalWeight: 1500.5,
     isIacCcsf: true,
     iacCcsf: {
-      sealPhotos: ["photo1.jpg", "photo2.jpg"],
+      sealPhotos: [],
       verificationNotes: "All seals verified",
       verified: true,
       report: true,
@@ -70,6 +70,6 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  return await new Promise((resolve) => setTimeout(() => resolve(order), 10000))
+  return await new Promise((resolve) => setTimeout(() => resolve(order), 2000))
   // return order
 })

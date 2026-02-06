@@ -8,8 +8,12 @@ interface ModalPropsExtended extends ModalProps {
 }
 
 const props = withDefaults(defineProps<ModalPropsExtended>(), {
-
+  title: '',
+  description: '',
 })
+
+const slots = useSlots()
+const hasFooter = computed(() => !!slots.footer)
 </script>
 <template>
   <UModal 
@@ -19,16 +23,16 @@ const props = withDefaults(defineProps<ModalPropsExtended>(), {
     :ui="{ content: 'rounded-2xl' }"
   >
     <Button v-if="buttonProps" v-bind="buttonProps" />
-    <template #header>
+    <template v-if="$slots.header" #header>
       <slot name="header" />
     </template>
-    <template #content>
+    <template v-if="$slots.content" #content>
       <slot name="content" />
     </template>
     <template #body>
       <slot />
     </template>
-    <template #footer>
+    <template v-if="$slots.footer" #footer>
       <slot name="footer" />
     </template>
   </UModal>

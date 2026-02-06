@@ -20,7 +20,7 @@ const config: Config = {
       title: 'Create Order',
       isNavBack: true
    },
-   '/warehouse/order/details/': {
+   '/warehouse/order/': {
       title: 'Order Details',
       isNavBack: true
    },

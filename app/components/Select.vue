@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SelectProps, FormFieldProps, AcceptableValue } from '@nuxt/ui'
+import type { SelectProps, FormFieldProps } from '@nuxt/ui'
 
 const model = defineModel<number | string>()
 
@@ -23,6 +23,8 @@ const props = withDefaults(defineProps<SelectPropsExtended>(), {
         :variant="variant"
         :size="size"
         :placeholder="placeholder"
+        :loading="loading"
+        :loading-icon="loadingIcon"
         class="w-full rounded-lg" 
       />
     </UFormField>

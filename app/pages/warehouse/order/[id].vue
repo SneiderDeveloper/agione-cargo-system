@@ -1,38 +1,63 @@
 <script setup lang="ts">
+const PENDING_STATUS = 'pending'
+
 const route = useRoute()
-const { data, status } = await useLazyFetch<Order>(`/api/order/${route.params.id}`, {
-  // Desactiva el cache para ver el delay real
-  key: `order-${route.params.id}-${Date.now()}`,
-  // O usa esto para refrescar en cada visita:
-  // server: false,
-  // lazy: true,
-})
-const isIACCCSF = ref(false)
+const { data, status } = await useLazyFetch<Order>(`/api/order/${route.params.id}`)
+
 const checkIn = useState<boolean>('checkIn', () => false)
 const isModalOpen = useState<boolean>('isModalOpen', () => false)
 const isMatchPhotoID = useState<boolean>('isMatchPhotoID', () => false)
+const loading = useState<boolean>('loading', () => status.value === 'pending')
+const orderRecord = reactive<Order>(data.value || {})
+
+const sealVerificationButtonsDisabled = computed(() => {
+  return !orderRecord.isIacCcsf || !orderRecord.iacCcsf?.verificationNotes
+})
 
 const handleCheck = () => {
   if (!checkIn.value) isModalOpen.value = true
   if (checkIn.value) isModalOpen.value = true
 }
 
-// Observa el cambio de status
-watch(status, (newStatus) => {
-  console.log('Status changed:', newStatus)
-})
+const fileToBase64 = async (file: File) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
 
-console.log({ initialStatus: status.value, hasData: !!data.value })
+const handleSubmitIacCcsf = async () => {
+  try {
+    console.log('seal phone', orderRecord.iacCcsf.sealPhotos)
+    const base64Files = await Promise.all(orderRecord.iacCcsf.sealPhotos.map(file => fileToBase64(file)))
+    console.log('seal phone base 64', base64Files)
+      
+    await $fetch(`/api/order/${route.params.id}`, {
+      method: 'POST',
+      body: {
+        isIacCcsf: orderRecord?.isIacCcsf,
+        iacCcsf: {
+          sealPhotos: orderRecord?.iacCcsf?.sealPhotos || [],
+          verificationNotes: orderRecord?.iacCcsf?.verificationNotes,
+          verified: true,
+          report: false,
+          endDate: new Date().toISOString(),
+        },
+      },
+    })
+  } catch (error) {
+    console.error('Error submitting IAC-CCSF compliance:', error)
+  }
+}
+
+watch(status, (newStatus) => {
+  loading.value = newStatus === PENDING_STATUS
+})
 </script>
 <template>
-  <!-- Loading State -->
-  <div v-if="status === 'pending'" class="flex flex-col items-center justify-center p-8 gap-4">
-    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-    <p class="text-slate-600">Loading order information...</p>
-  </div>
-
-  <!-- Content -->
-  <div v-else class="flex flex-col gap-5">
+  <div class="flex flex-col gap-5">
     <OrderStatusBanner 
       v-if="checkIn"
       total-awbs="23"
@@ -50,17 +75,17 @@ console.log({ initialStatus: status.value, hasData: !!data.value })
       <div class="flex flex-col gap-3">
         <DriverInformationCard 
           :driver="{
-            fullName: data?.driver?.fullName,
-            licensePhoto: data?.driver?.licensePhoto
+            fullName: orderRecord?.driver?.fullName,
+            licensePhoto: orderRecord?.driver?.licensePhoto
           }"
-          :createdAt="data?.createdAt"
+          :createdAt="orderRecord?.createdAt"
           :verifiedDriver="true"
         />
         <KioskCheckInInformation 
-          :createdAt="data?.createdAt"
+          :createdAt="orderRecord?.createdAt"
         />
         <AssignedDoorInformationCard
-          :doorName="data?.assignedDoor"
+          :doorName="orderRecord?.assignedDoor"
         />
       </div>
     </SectionContainer>
@@ -68,7 +93,7 @@ console.log({ initialStatus: status.value, hasData: !!data.value })
       v-if="checkIn"
       title="IAC-CCSF Compliance"
       description="Does the seal # match the IAC-CCSF?"
-      :content="isIACCCSF"
+      :content="orderRecord.isIacCcsf"
       :icon="{
         name: 'i-lucide-shield',
         color: 'text-blue-500',
@@ -77,21 +102,24 @@ console.log({ initialStatus: status.value, hasData: !!data.value })
     >
       <template #actions>
         <Switch 
-          v-model="isIACCCSF"
+          v-model="orderRecord.isIacCcsf"
           color="secondary"
         />
       </template>
       <div class="flex flex-col gap-3">
         <FileUpload
+          v-model="orderRecord.iacCcsf.sealPhotos"
           accept="image/*"
           label="Click to upload seal photos"
           description="Multiple images • JPG, PNG up to 10MB"
           icon="i-lucide-image"
+          multiple
           :form-field-props="{
             label: 'Upload Seal Photos',
           }"
         />
         <Textarea
+          v-model="orderRecord.iacCcsf.verificationNotes"
           placeholder="Document seal condition, serial numbers, any discrepancies or irregularities observed..."
           :form-field-props="{
             label: 'Verification Notes',
@@ -101,12 +129,15 @@ console.log({ initialStatus: status.value, hasData: !!data.value })
           <Button
             variant="outline"
             color="error"
+            :disabled="sealVerificationButtonsDisabled"
           >
             Report Seal Issues
           </Button>
           <Button
             variant="solid"
             color="success"
+            @click="handleSubmitIacCcsf"
+            :disabled="sealVerificationButtonsDisabled"
           >
             Verify Seals Intact
           </Button>
@@ -124,13 +155,13 @@ console.log({ initialStatus: status.value, hasData: !!data.value })
     >
       <template #actions>
         <Chip
-          :label="`${data?.awbs?.length} AWB's`"
+          :label="`${orderRecord?.awbs?.length} AWB's`"
           color="info"
           variant="soft"
         />
       </template>
       <div class="flex flex-col gap-3">
-        <template v-for="awb in data?.awbs" :key="awb.id">
+        <template v-for="awb in orderRecord?.awbs" :key="awb.id">
           <AwbCard
             :id="awb.id"
             :title="`AWB #${awb.code}`"
@@ -151,11 +182,12 @@ console.log({ initialStatus: status.value, hasData: !!data.value })
       color="primary"
       size="lg"
       @click="handleCheck"
+      :disabled="loading"
     >
       {{checkIn ? 'Checked Out' : 'Check In'}}
     </Button>
     <LicenseVerificationModal
-      :license-photo="data?.driver?.licensePhoto"
+      :license-photo="orderRecord?.driver?.licensePhoto"
     />
   </div>
 </template>

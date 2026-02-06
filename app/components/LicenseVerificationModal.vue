@@ -21,9 +21,11 @@ const handleCheckIn = () => {
     description="Verify driver's license before check-in"
     v-model="isModalOpen"
   >
-    <div class="flex flex-col gap-3">
+    <div class="flex flex-col gap-4">
       <section>
-        <span>Driver License on File</span>
+        <p class="mb-2 text-sm text-slate-500">
+          Driver License on File
+        </p>
         <Image 
           :src="licensePhoto" 
           alt="Driver License"
@@ -41,7 +43,7 @@ const handleCheckIn = () => {
           />
         </template>
       </SectionHeader>
-      <div class="flex gap-2 justify-end">
+      <div class="flex gap-2 justify-end w-full">
         <Button 
           variant="outline" 
           @click="isModalOpen = false"

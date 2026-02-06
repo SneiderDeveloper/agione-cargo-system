@@ -13,10 +13,10 @@
       size="sm"
     />
     <section v-if="!isLoading" class="flex flex-col">
-      <span v-if="label" class="text-xs text-slate-500">
+      <span class="text-xs text-slate-500">
         {{ label }}
       </span>
-      <span v-if="value" class="font-semibold text-lg">
+      <span class="font-semibold text-lg">
         {{ value }}
       </span>
     </section>
