@@ -1,25 +1,39 @@
 <script setup lang="ts">
 
 const isMatchPhotoID = useState<boolean>('isMatchPhotoID')
-const isModalOpen = useState<boolean>('isModalOpen')
+const isLicenseModalOpen = useState<boolean>('isLicenseModalOpen')
 const checkIn = useState<boolean>('checkIn')
+
+const route = useRoute()
 
 defineProps<{
   licensePhoto: string | undefined
 }>()
 
-const handleCheckIn = () => {
+const handleCheckIn = async () => {
   if (isMatchPhotoID.value) {
     checkIn.value = true
+    try {     
+      return await $fetch(`/api/order/${route.params.id}`, {
+        method: 'POST',
+        body: {
+          verifiedDriver: true,
+          driverCheckIn: new Date().toISOString(),
+        },
+      })
+    } catch (error) {
+      console.error('Error submitting driver check-in:', error)
+      throw Error('Failed to submit driver check-in. Please try again.')
+    }
   }
-  isModalOpen.value = false
+  isLicenseModalOpen.value = false
 }
 </script>
 <template>
   <Modal
     title="Driver License Verification"
     description="Verify driver's license before check-in"
-    v-model="isModalOpen"
+    v-model="isLicenseModalOpen"
   >
     <div class="flex flex-col gap-4">
       <section>
@@ -46,7 +60,7 @@ const handleCheckIn = () => {
       <div class="flex gap-2 justify-end w-full">
         <Button 
           variant="outline" 
-          @click="isModalOpen = false"
+          @click="isLicenseModalOpen = false"
           color="neutral"
         >
           Cancel
