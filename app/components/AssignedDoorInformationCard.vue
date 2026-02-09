@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   doorName: string | number | undefined
 }>()
 
@@ -8,6 +8,8 @@ interface DockDoor {
   value: number
 }
 
+const route = useRoute()
+
 const { 
   data: dockDoors, 
   status 
@@ -15,8 +17,24 @@ const {
 
 const edit = ref(false)
 const loading = useState<boolean>('loading')
+const doorName = ref<string | number>(props.doorName || '')
 
 const loadingDockDoor = computed(() => status.value === 'pending')
+
+const handleChangeDoor = async () => {
+
+  // try {     
+  //   return await $fetch(`/api/order/${route.params.id}`, {
+  //     method: 'POST',
+  //     body: {
+  //       assignedDoor: doorName.value,
+  //     },
+  //   })
+  // } catch (error) {
+  //   console.error('Error submitting driver check-in:', error)
+  //   throw Error('Failed to submit driver check-in. Please try again.')
+  // }
+}
 </script>
 <template>
   <InformationCard title="Assigned Dock Door">
@@ -39,6 +57,7 @@ const loadingDockDoor = computed(() => status.value === 'pending')
     </div>
     <div v-if="edit">
       <Select
+        v-model="doorName"
         :items="dockDoors"
         placeholder="Select date range"
         variant="soft"
@@ -50,6 +69,7 @@ const loadingDockDoor = computed(() => status.value === 'pending')
           size="md"
           class="w-full"
           color="secondary"
+          @click="handleChangeDoor"
         >
           Save Changes
         </Button>

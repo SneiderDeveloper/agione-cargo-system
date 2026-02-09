@@ -69,8 +69,8 @@ watch(status, (newStatus) => {
   <div class="flex flex-col gap-5">
     <OrderStatusBanner 
       v-if="checkIn"
-      total-awbs="23"
-      assigned-door="B-03"
+      :total-awbs="order?.awbs?.length"
+      :assigned-door="order?.assignedDoor"
     />
     <SectionContainer
       title="Driver Information"

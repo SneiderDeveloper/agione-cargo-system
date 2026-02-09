@@ -10,21 +10,25 @@ defineProps<{
   licensePhoto: string | undefined
 }>()
 
+const sudmitCheckIn = async () => {
+  try {     
+    return await $fetch(`/api/order/${route.params.id}`, {
+      method: 'POST',
+      body: {
+        verifiedDriver: true,
+        driverCheckIn: new Date().toISOString(),
+      },
+    })
+  } catch (error) {
+    console.error('Error submitting driver check-in:', error)
+    throw Error('Failed to submit driver check-in. Please try again.')
+  }
+}
+
 const handleCheckIn = async () => {
   if (isMatchPhotoID.value) {
     checkIn.value = true
-    try {     
-      return await $fetch(`/api/order/${route.params.id}`, {
-        method: 'POST',
-        body: {
-          verifiedDriver: true,
-          driverCheckIn: new Date().toISOString(),
-        },
-      })
-    } catch (error) {
-      console.error('Error submitting driver check-in:', error)
-      throw Error('Failed to submit driver check-in. Please try again.')
-    }
+    // await sudmitCheckIn()
   }
   isLicenseModalOpen.value = false
 }

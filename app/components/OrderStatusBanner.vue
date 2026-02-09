@@ -7,8 +7,8 @@ const hoursDifference = ref<string>('00:00:00');
 let intervalId: number | undefined;
 
 withDefaults(defineProps<{
-  totalAwbs: string | number
-  assignedDoor: string
+  totalAwbs: string | number | undefined | null
+  assignedDoor: string | undefined | null
 }>(), {
   totalAwbs: '0',
   assignedDoor: 'N/A'
