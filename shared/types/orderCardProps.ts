@@ -1,12 +1,14 @@
+import type { Awb } from './order'
 export interface OrderCardProps {
-  id: number
+  id?: number
   title: string
   orderNumber: string
-  priority: 'Low' | 'Medium' | 'High'
-  status: 'Pending' | 'In progress' | 'Completed'
+  priority?: 'Low' | 'Medium' | 'High'
+  status?: 'Pending' | 'In progress' | 'Completed'
   totalWeight: number | string
   totalAwbs: number | string
-  dest: string[]
+  awbs?: Awb[]
+  dest?: string[]
   assignedDoor?: string
   createdAt?: string
   user: {
@@ -19,4 +21,6 @@ export interface OrderCardProps {
   }
   seeDetails?: boolean
   unassigned?: boolean
+  completed?: boolean
+  completionDate?: string
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SelectItem } from '@nuxt/ui'
 
-const { data } = await useFetch('/api/orders')
+const { data } = await useLazyFetch<Order[]>('/api/orders')
 
 const filters = reactive({
   status: 'backlog',
@@ -40,6 +40,11 @@ const priority = ref<SelectItem[]>([
     value: 'low'
   }
 ])
+
+const orders: ComputedRef<Order[]> = computed(() => {
+  if (!data.value) return []
+  return data.value.filter((order: Order) => order?.completed)
+})
 </script>
 <template>
   <div>
@@ -113,23 +118,27 @@ const priority = ref<SelectItem[]>([
           <h2>Historical Orders</h2>
         </div>
         <div>
-          <Chip label="5 orders" variant="soft" class="bg-purple-400 text-white"/>
+          <Chip 
+            :label="`${orders.length} orders`" 
+            variant="soft" 
+            class="bg-purple-400 text-white"
+          />
         </div>
       </div>
-      <div v-if="data && data.length" class="flex flex-col gap-3">
-        <template v-for="order in data" :key="order.id">
+      <div v-if="orders && orders.length" class="flex flex-col gap-3">
+        <template v-for="order in orders" :key="order.id">
           <OrderCard
             :title="order.truckCompany"
             :orderNumber="order.code"
             :priority="order.priority"
             :status="order.status"
+            :completed="order.completed"
+            :completionDate="order.completionDate"
             :totalWeight="order?.awbsSummary?.totalWeight"
             :totalAwbs="order?.awbsSummary?.totalAwbs"
-            :dest="order?.awbsSummary?.dest"
-            :assignedDoor="order.assignedDoor"
+            :awbs="order.awbs"
             :user="{
               name: order?.driver?.fullName,
-              description: 'Arrived 08:30 AM',
               avatar: {
                 alt: order?.driver?.fullName
               }

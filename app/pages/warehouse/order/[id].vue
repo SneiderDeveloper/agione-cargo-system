@@ -3,21 +3,24 @@ const PENDING_STATUS = 'pending'
 
 const route = useRoute()
 const toash = useToast()
-const { data: order, status } = await useLazyFetch<Order>(`/api/order/${route.params.id}`)
+const { 
+  data: order, 
+  status 
+} = await useLazyFetch<Order>(`/api/order/${route.params.id}`)
 
 
 const checkIn = useState<boolean>('checkIn', () => false)
 const isLicenseModalOpen = useState<boolean>('isLicenseModalOpen', () => false)
 const isCheckOutModalOpen = useState<boolean>('isCheckOutModalOpen', () => false)
 const isMatchPhotoID = useState<boolean>('isMatchPhotoID', () => false)
-const loading = useState<boolean>('loading', () => status.value === 'pending')
+const loading = useState<boolean>('loading', () => status.value === PENDING_STATUS)
 const state = reactive<any>({
-  isIacCcsf: order.value?.isIacCcsf,
+  isIacCcsf: false,
   iacCcsf: {
-    sealPhotos: order.value?.iacCcsf?.sealPhotos || [],
-    verificationNotes: order.value?.iacCcsf?.verificationNotes || '',
-    verified: order.value?.iacCcsf?.verified || false,
-    report: order.value?.iacCcsf?.report || false,
+    sealPhotos: [],
+    verificationNotes: '',
+    verified: false,
+    report: false,
   }
 })
 
@@ -63,6 +66,12 @@ const handleSubmitIacCcsf = async (status: 'report' | 'verified') => {
 
 watch(status, (newStatus) => {
   loading.value = newStatus === PENDING_STATUS
+
+  state.isIacCcsf = order.value?.isIacCcsf
+  state.iacCcsf.sealPhotos = order.value?.iacCcsf?.sealPhotos
+  state.iacCcsf.verificationNotes = order.value?.iacCcsf?.verificationNotes
+  state.iacCcsf.verified = order.value?.iacCcsf?.verified
+  state.iacCcsf.report = order.value?.iacCcsf?.report
 })
 </script>
 <template>
@@ -94,7 +103,8 @@ watch(status, (newStatus) => {
           :createdAt="order?.createdAt"
         />
         <AssignedDoorInformationCard
-          :doorName="order?.assignedDoor"
+          :doorId="order?.assignedDoorId"
+          :door-name="order?.assignedDoor"
         />
       </div>
     </SectionContainer>

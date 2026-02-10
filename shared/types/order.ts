@@ -1,12 +1,34 @@
+import type { WarehouseAgentCheck } from './awb'
+
+export interface Awb {
+  id: number;
+  code: string;
+  statusId: number;
+  status: 'Pending' | 'In progress' | 'Completed';
+  natureOfGoods: string;
+  totalNumberOfPieces: number;
+  totalWeight: number;
+  shc: number[];
+  pendingDgCheck: boolean;
+  warehouseAgentCheck: WarehouseAgentCheck;
+}
+
+export interface Driver {
+  fullName: string;
+  registrationDate: string;
+  licensePhoto: string;
+}
+
 export interface Order {
+  id: number;
   statusId: number;
   priorityId: number;
   driverId: number;
   warehouseAgentId: number;
   assignedDoorId: number;
   code: string;
-  status: string;
-  priority: string;
+  status: 'Pending' | 'In progress' | 'Completed';
+  priority: 'Low' | 'Medium' | 'High';
   assignedDoor: string;
   active: boolean;
   truckCompany: string;
@@ -23,28 +45,14 @@ export interface Order {
     report: boolean;
     endDate: Date;
   };
-  awbs: Array<{
-    id: number;
-    code: string;
-    statusId: number;
-    status: 'Pending' | 'In progress' | 'Completed';
-    natureOfGoods: string;
-    totalNumberOfPieces: number;
-    totalWeight: number;
-    shc: number[];
-    pendingDgCheck: boolean;
-  }>;
-  driver: {
-    fullName: string;
-    registrationDate: Date;
-    licensePhoto: string;
-  };
+  awbs: Awb[];
+  driver: Driver;
   smsId: number;
   driverCheckIn: Date;
   driverCheckOut: Date;
   verifiedDriver: boolean;
   completed: boolean;
-  completionDate: Date;
+  completionDate: string;
   proofOfAcceptance: string;
   createdAt: string;
 }

@@ -18,7 +18,8 @@ const validate = (state: Partial<Schema>): FormError[] => {
 
 const handleSubmit = (event: FormSubmitEvent<Schema>) => {
   console.log('Form submitted with:', state)
-  navigateTo('/warehouse')
+  if (state.email.includes('admin')) navigateTo('/admin')
+  if (state.email.includes('ware')) navigateTo('/warehouse')
 }
 </script>
 <template>

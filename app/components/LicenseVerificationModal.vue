@@ -51,7 +51,6 @@ const handleCheckIn = async () => {
       </section>
       <SectionHeader
         title="Driver match photo ID"
-        :content="false"
         description="Does the license shown above match the driver physical photo ID?"
       >
         <template #actions>

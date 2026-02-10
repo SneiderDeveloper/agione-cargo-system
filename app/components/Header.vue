@@ -12,6 +12,10 @@ interface Config {
 }
 
 const config: Config = {
+   '/admin': {
+      title: 'Operations Control Center',
+      isNavBack: false
+   },
    '/warehouse': {
       title: 'Warehouse Acceptance Operation',
       isNavBack: false

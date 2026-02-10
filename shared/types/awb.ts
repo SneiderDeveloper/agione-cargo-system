@@ -1,4 +1,7 @@
+import type { Driver } from './order'
+
 export interface AwbDetails {
+  statusId: number,
   numberUld: string,
   contourId: number,
   numberOfPieces: number,
@@ -16,10 +19,9 @@ export interface AwbDetails {
   packagingTypeId: number,
   warehouseLocationId: number,
   shipmentEvidencePhotos: string[],
-  isCargoDamaged: boolean,
-  damageDescription?: string,
   additionalNotes: string,
   ticket: string,
+  status: string,
 }
 
 export interface Group extends AwbDetails {
@@ -34,11 +36,22 @@ export interface ActiveContainer {
   batteryPercentage: number,
 }
 
+export interface WarehouseAgentCheck {
+  completed: {
+    signature: string,
+  },
+  reject: {
+    rejectionCategoryId: number,
+    detailedReason: string,
+  }
+  date: string,
+}
+
 export interface Awb {
   driverId: number,
   statusId: number,
   orderId: number,
-  status: string,
+  status: 'Pending' | 'In progress' | 'Completed',
   code: string, // 002-8765-4321
   totalNumberOfPieces: number,
   totalWeight: number,
@@ -58,16 +71,8 @@ export interface Awb {
   groupMode: boolean, // ?
   acceptanceDetails: AwbDetails,
   groups: Group[],
+  driver: Driver,
   shc: number[],
   pendingDgCheck: boolean, // ?
-  warehouseAgentCheck: {
-    completed: {
-      signature: string,
-    },
-    reject: {
-      rejectionCategoryId: number,
-      detailedReason: string,
-    }
-    date: string,
-  }
+  warehouseAgentCheck: WarehouseAgentCheck
 }

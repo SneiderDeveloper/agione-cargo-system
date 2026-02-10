@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
-  doorName: string | number | undefined
+  doorId: string | number | undefined
+  doorName: string | undefined
 }>()
 
 interface DockDoor {
@@ -17,8 +18,14 @@ const {
 
 const edit = ref(false)
 const loading = useState<boolean>('loading')
-const doorName = ref<string | number>(props.doorName || '')
+const door = ref<string | number | null>(null)
 
+const selectedDoor = computed({
+  get: () => door.value || props.doorId,
+  set: (value: string | number) => {
+    door.value = value
+  },
+})
 const loadingDockDoor = computed(() => status.value === 'pending')
 
 const handleChangeDoor = async () => {
@@ -27,7 +34,7 @@ const handleChangeDoor = async () => {
   //   return await $fetch(`/api/order/${route.params.id}`, {
   //     method: 'POST',
   //     body: {
-  //       assignedDoor: doorName.value,
+  //       assignedDoorId: door.value,
   //     },
   //   })
   // } catch (error) {
@@ -57,7 +64,7 @@ const handleChangeDoor = async () => {
     </div>
     <div v-if="edit">
       <Select
-        v-model="doorName"
+        v-model="selectedDoor"
         :items="dockDoors"
         placeholder="Select date range"
         variant="soft"
