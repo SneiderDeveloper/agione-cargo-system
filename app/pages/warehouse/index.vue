@@ -25,6 +25,7 @@ const sections = computed(() => ([
     icon: {
       name: 'i-lucide-box',
     },
+    detailsLink: '/warehouse/order/',
     data: activeOrder.value,
     actions: true,
   },
@@ -34,7 +35,6 @@ const sections = computed(() => ([
     icon: {
       name: 'i-lucide-box',
     },
-    seeDetails: false,
     data: assignedOrders.value,
   },
   {
@@ -43,7 +43,6 @@ const sections = computed(() => ([
     icon: {
       name: 'i-lucide-box',
     },
-    seeDetails: false,
     unassigned: true,
     data: unassignedOrders.value,
   },
@@ -109,7 +108,7 @@ onBeforeMount(() => {
                   alt: order?.driver?.fullName
                 }
               }"
-              :seeDetails="section.seeDetails"
+              :detailsLink="section.detailsLink"
               :unassigned="section.unassigned"
             />
           </template>

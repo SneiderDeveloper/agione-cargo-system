@@ -1,6 +1,6 @@
 import type { WarehouseAgentCheck } from './awb'
 
-export interface Awb {
+export interface AwbSummary {
   id: number;
   code: string;
   statusId: number;
@@ -45,7 +45,7 @@ export interface Order {
     report: boolean;
     endDate: Date;
   };
-  awbs: Awb[];
+  awbs: AwbSummary[];
   driver: Driver;
   smsId: number;
   driverCheckIn: Date;

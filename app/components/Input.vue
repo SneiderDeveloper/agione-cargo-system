@@ -17,6 +17,14 @@ const { formFieldProps, modelValue, ...inputProps } = props
       v-bind="inputProps"
       class="w-full"
       :ui="{ base: 'rounded-lg' }"
-    />
+    >
+      <slot />
+      <template v-if="$slots.leading" #leading>
+        <slot name="leading" />
+      </template>
+      <template v-if="$slots.trailing" #trailing>
+        <slot name="trailing" />
+      </template>
+    </UInput>
   </UFormField>
 </template>

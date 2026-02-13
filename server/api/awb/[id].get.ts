@@ -4,6 +4,7 @@ const awbs = [
     driverId: 101,
     statusId: 2,
     orderId: 5001,
+    status: "Pending",
     code: "002-8765-4321",
     totalNumberOfPieces: 10,
     totalWeight: 1200.5,
@@ -445,7 +446,14 @@ const awbs = [
 export default defineEventHandler(async (event) => {
   const id = event.context.params?.id
 
-  if (!id) return awbs
+  console.log('id', id)
+
+  if (!id) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'AWB ID is required',
+    })
+  }
 
   const awb = awbs.find(a => a.id === Number(id))
 

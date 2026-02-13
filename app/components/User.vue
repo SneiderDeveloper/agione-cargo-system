@@ -28,7 +28,7 @@ withDefaults(defineProps<UserProps>(), {
                   {{ description }}
                 </span>
                 <Chip 
-                  v-show="chip" 
+                  v-show="chip.label || chip.icon" 
                   v-bind="chip" 
                   class="mt-1.5"
                 />

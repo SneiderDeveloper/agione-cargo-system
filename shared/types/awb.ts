@@ -37,6 +37,8 @@ export interface ActiveContainer {
 }
 
 export interface WarehouseAgentCheck {
+  warehouseAgentId: number,
+  warehouseAgentFullName: string,
   completed: {
     signature: string,
   },
@@ -48,10 +50,15 @@ export interface WarehouseAgentCheck {
 }
 
 export interface Awb {
+  id: number,
   driverId: number,
   statusId: number,
   orderId: number,
-  status: 'Pending' | 'In progress' | 'Completed',
+  status: 'Pending' | 'In progress' | 'Accepted' | 'Rejected',
+  order: {
+    priorityId: number,
+    priority: 'Low' | 'Medium' | 'High',
+  },
   code: string, // 002-8765-4321
   totalNumberOfPieces: number,
   totalWeight: number,

@@ -4,9 +4,7 @@ import type { Awb } from '#shared/types/order'
 import type { BadgeProps } from '@nuxt/ui'
 import moment from 'moment';
 
-const props = withDefaults(defineProps<OrderCardProps>(), {
-  seeDetails: true
-})
+const props = defineProps<OrderCardProps>()
 
 const showAwbDetails = ref(false)
 
@@ -19,7 +17,8 @@ const colorPriority = computed(() => {
 const colorStatus = computed(() => {
   if (props.status === 'Pending') return 'warning'
   if (props.status === 'In progress') return 'info'
-  if (props.status === 'Completed') return 'success'
+  if (props.status === 'Accepted') return 'success'
+  if (props.status === 'Rejected') return 'error'
 })
 
 interface Chips { 
@@ -149,7 +148,15 @@ const getAwbTags = (awb: Awb) => ([
               `${totalWeight} kg`
             ]" 
           />
-          <div class="flex items-center gap-1 font-semibold">
+          <div 
+            v-if="completed" 
+            class="
+              flex 
+              items-center 
+              gap-1 
+              font-semibold
+            "
+          >
             <UIcon name="i-lucide-clock" class="text-slate-500" size="sm"/>
             <span class="text-slate-500 text-sm">
               {{ timeTotal }}
@@ -165,12 +172,12 @@ const getAwbTags = (awb: Awb) => ([
         </div>
       </div>
       <Button
-        v-if="seeDetails"
+        v-if="detailsLink"
         trailingIcon="i-lucide-chevron-right"
         variant="soft"
         color="neutral"
         size="sm"
-        @click="navigateTo(`/warehouse/order/${id}`)"
+        @click="navigateTo(`${detailsLink}${id}`)"
       />
       <Button
         v-if="unassigned"
@@ -280,6 +287,29 @@ const getAwbTags = (awb: Awb) => ([
             </div>
           </template>
         </div>
+      </div>
+      <div
+        v-if="description"
+        class="
+          bg-slate-50 
+          border 
+          border-slate-100 
+          m-3 
+          p-3 
+          rounded-2xl
+        "
+      >
+        <h3 
+          class="
+            text-slate-500 
+            font-semibold 
+            uppercase
+            text-sm
+          "
+        >
+          Cargo description
+        </h3>
+        <p>{{ description }}</p>
       </div>
     </section>
   </div>
