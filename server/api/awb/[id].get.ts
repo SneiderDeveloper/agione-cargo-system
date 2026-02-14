@@ -1,10 +1,23 @@
 const awbs = [
   {
     id: 1,
-    driverId: 101,
     statusId: 2,
     orderId: 5001,
     status: "Pending",
+    order: {
+      driverId: 1,
+      warehouseAgentId: 1,
+      priorityId: 1,
+      priority: 'Low',
+      driver: {
+        fullName: "John Doe",
+        registrationDate: "2024-06-01",
+        licensePhoto: "license.jpg"
+      },
+      warehouseAgent: {
+        fullName: "Jane Smith",
+      },
+    },
     code: "002-8765-4321",
     totalNumberOfPieces: 10,
     totalWeight: 1200.5,
@@ -88,9 +101,23 @@ const awbs = [
   },
   {
     id: 2,
-    driverId: 102,
     statusId: 1,
     orderId: 5002,
+    status: "In Progress",
+    order: {
+      driverId: 102,
+      warehouseAgentId: 2,
+      priorityId: 2,
+      priority: 'Medium',
+      driver: {
+        fullName: "Mike Wilson",
+        registrationDate: "2024-05-15",
+        licensePhoto: "license2.jpg"
+      },
+      warehouseAgent: {
+        fullName: "Tom Anderson",
+      },
+    },
     code: "002-8765-4322",
     totalNumberOfPieces: 15,
     totalWeight: 1850.75,
@@ -149,9 +176,23 @@ const awbs = [
   },
   {
     id: 3,
-    driverId: 103,
     statusId: 3,
     orderId: 5003,
+    status: "Completed",
+    order: {
+      driverId: 103,
+      warehouseAgentId: 3,
+      priorityId: 3,
+      priority: 'High',
+      driver: {
+        fullName: "Carlos Garcia",
+        registrationDate: "2024-04-20",
+        licensePhoto: "license3.jpg"
+      },
+      warehouseAgent: {
+        fullName: "Maria Rodriguez",
+      },
+    },
     code: "002-8765-4323",
     totalNumberOfPieces: 8,
     totalWeight: 950.3,
@@ -235,9 +276,23 @@ const awbs = [
   },
   {
     id: 4,
-    driverId: 104,
     statusId: 1,
     orderId: 5004,
+    status: "Pending",
+    order: {
+      driverId: 104,
+      warehouseAgentId: 4,
+      priorityId: 1,
+      priority: 'Low',
+      driver: {
+        fullName: "David Lee",
+        registrationDate: "2024-03-10",
+        licensePhoto: "license4.jpg"
+      },
+      warehouseAgent: {
+        fullName: "Lisa Chen",
+      },
+    },
     code: "002-8765-4324",
     totalNumberOfPieces: 20,
     totalWeight: 2500.0,
@@ -296,9 +351,23 @@ const awbs = [
   },
   {
     id: 5,
-    driverId: 105,
     statusId: 2,
     orderId: 5005,
+    status: "In Transit",
+    order: {
+      driverId: 105,
+      warehouseAgentId: 5,
+      priorityId: 2,
+      priority: 'Medium',
+      driver: {
+        fullName: "Emma Thompson",
+        registrationDate: "2024-02-28",
+        licensePhoto: "license5.jpg"
+      },
+      warehouseAgent: {
+        fullName: "Peter White",
+      },
+    },
     code: "002-8765-4325",
     totalNumberOfPieces: 12,
     totalWeight: 1400.8,
@@ -382,9 +451,23 @@ const awbs = [
   },
   {
     id: 6,
-    driverId: 106,
     statusId: 1,
     orderId: 5006,
+    status: "Pending",
+    order: {
+      driverId: 106,
+      warehouseAgentId: 6,
+      priorityId: 3,
+      priority: 'High',
+      driver: {
+        fullName: "Alex Martinez",
+        registrationDate: "2024-01-15",
+        licensePhoto: "license6.jpg"
+      },
+      warehouseAgent: {
+        fullName: "Nina Patel",
+      },
+    },
     code: "002-8765-4326",
     totalNumberOfPieces: 25,
     totalWeight: 3200.5,

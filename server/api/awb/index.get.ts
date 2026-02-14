@@ -1,13 +1,22 @@
 const awbs = [
   {
     id: 1,
-    driverId: 101,
     statusId: 2,
     orderId: 5001,
     status: "Pending",
     order: {
-      priorityId: 2,
-      priority: "High",
+      driverId: 1,
+      warehouseAgentId: 1,
+      priorityId: 1,
+      priority: 'Low',
+      driver: {
+        fullName: "John Doe",
+        registrationDate: "2024-06-01",
+        licensePhoto: "license.jpg"
+      },
+      warehouseAgent: {
+        fullName: "Jane Smith",
+      },
     },
     code: "002-8765-4321",
     totalNumberOfPieces: 10,
@@ -25,11 +34,6 @@ const awbs = [
     isBUP: true,
     isActiveContainer: true,
     groupMode: true,
-    driver: {
-      fullName: "John Smith",
-      registrationDate: new Date("2024-06-01T12:00:00Z"),
-      licensePhoto: "john_smith_license.jpg",
-    },
     shc: [101, 102],
     pendingDgCheck: false,
     warehouseAgentCheck: {
@@ -45,13 +49,22 @@ const awbs = [
   },
   {
     id: 2,
-    driverId: 102,
     statusId: 1,
-    status: "In Progress",
     orderId: 5002,
+    status: "In Progress",
     order: {
+      driverId: 102,
+      warehouseAgentId: 2,
       priorityId: 1,
       priority: "Medium",
+      driver: {
+        fullName: "Jane Doe",
+        registrationDate: "2024-06-02",
+        licensePhoto: "jane_doe_license.jpg"
+      },
+      warehouseAgent: {
+        fullName: "Mark Johnson",
+      },
     },
     code: "002-8765-4322",
     totalNumberOfPieces: 15,
@@ -69,11 +82,6 @@ const awbs = [
     isBUP: false,
     isActiveContainer: false,
     groupMode: false,
-    driver: {
-      fullName: "Jane Doe",
-      registrationDate: new Date("2024-06-02T12:00:00Z"),
-      licensePhoto: "jane_doe_license.jpg",
-    },
     shc: [103],
     pendingDgCheck: true,
     warehouseAgentCheck: {
@@ -89,13 +97,22 @@ const awbs = [
   },
   {
     id: 3,
-    driverId: 103,
     statusId: 3,
-    status: "Accepted",
     orderId: 5003,
+    status: "Accepted",
     order: {
+      driverId: 103,
+      warehouseAgentId: 3,
       priorityId: 3,
       priority: "Low",
+      driver: {
+        fullName: "Alice Johnson",
+        registrationDate: "2024-06-03",
+        licensePhoto: "alice_johnson_license.jpg"
+      },
+      warehouseAgent: {
+        fullName: "Patricia Davis",
+      },
     },
     code: "002-8765-4323",
     totalNumberOfPieces: 8,
@@ -113,11 +130,6 @@ const awbs = [
     isBUP: true,
     isActiveContainer: true,
     groupMode: true,
-    driver: {
-      fullName: "Alice Johnson",
-      registrationDate: new Date("2024-06-03T12:00:00Z"),
-      licensePhoto: "alice_johnson_license.jpg",
-    },
     shc: [104, 105],
     pendingDgCheck: false,
     warehouseAgentCheck: {
@@ -133,13 +145,22 @@ const awbs = [
   },
   {
     id: 4,
-    driverId: 104,
     statusId: 1,
-    status: "Rejected",
     orderId: 5004,
+    status: "Rejected",
     order: {
+      driverId: 104,
+      warehouseAgentId: 4,
       priorityId: 2,
       priority: "High",
+      driver: {
+        fullName: "Bob Brown",
+        registrationDate: "2024-06-04",
+        licensePhoto: "bob_brown_license.jpg"
+      },
+      warehouseAgent: {
+        fullName: "Linda Martinez",
+      },
     },
     code: "002-8765-4324",
     totalNumberOfPieces: 20,
@@ -157,11 +178,6 @@ const awbs = [
     isBUP: false,
     isActiveContainer: false,
     groupMode: false,
-    driver: {
-      fullName: "Bob Brown",
-      registrationDate: new Date("2024-06-04T12:00:00Z"),
-      licensePhoto: "bob_brown_license.jpg",
-    },
     shc: [106],
     pendingDgCheck: false,
     warehouseAgentCheck: {
@@ -177,13 +193,22 @@ const awbs = [
   },
   {
     id: 5,
-    driverId: 105,
     statusId: 2,
-    status: "Pending",
     orderId: 5005,
+    status: "Pending",
     order: {
+      driverId: 105,
+      warehouseAgentId: 5,
       priorityId: 1,
       priority: "Medium",
+      driver: {
+        fullName: "Charlie Green",
+        registrationDate: "2024-06-05",
+        licensePhoto: "charlie_green_license.jpg"
+      },
+      warehouseAgent: {
+        fullName: "Nancy Wilson",
+      },
     },
     code: "002-8765-4325",
     totalNumberOfPieces: 12,
@@ -201,11 +226,6 @@ const awbs = [
     isBUP: true,
     isActiveContainer: true,
     groupMode: true,
-    driver: {
-      fullName: "Charlie Green",
-      registrationDate: new Date("2024-06-05T12:00:00Z"),
-      licensePhoto: "charlie_green_license.jpg",
-    },
     shc: [107, 108, 109],
     pendingDgCheck: true,
     warehouseAgentCheck: {
@@ -221,13 +241,22 @@ const awbs = [
   },
   {
     id: 6,
-    driverId: 106,
     statusId: 1,
-    status: "In Progress",
     orderId: 5006,
+    status: "In Progress",
     order: {
+      driverId: 106,
+      warehouseAgentId: 6,
       priorityId: 2,
       priority: "High",
+      driver: {
+        fullName: "David White",
+        registrationDate: "2024-06-06",
+        licensePhoto: "david_white_license.jpg"
+      },
+      warehouseAgent: {
+        fullName: "Karen Taylor",
+      },
     },
     code: "002-8765-4326",
     totalNumberOfPieces: 25,
@@ -245,11 +274,6 @@ const awbs = [
     isBUP: false,
     isActiveContainer: false,
     groupMode: false,
-    driver: {
-      fullName: "David White",
-      registrationDate: new Date("2024-06-06T12:00:00Z"),
-      licensePhoto: "david_white_license.jpg",
-    },
     shc: [110],
     pendingDgCheck: false,
     warehouseAgentCheck: {
@@ -265,6 +289,6 @@ const awbs = [
   }
 ]
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   return awbs
 })

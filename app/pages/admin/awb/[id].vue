@@ -18,7 +18,7 @@ const sections = computed(() => [
         color: 'error'
       },
       {
-        label: awb.value?.status,
+        label: awb.value?.order?.priority,
         color: 'warning'
       }
     ]
@@ -61,7 +61,7 @@ const sections = computed(() => [
       },
       {
         label: 'Warehouse Agent',
-        value: 'Michael Rodriguez'
+        value: awb.value?.order.warehouseAgent?.fullName
       }
     ]
   }

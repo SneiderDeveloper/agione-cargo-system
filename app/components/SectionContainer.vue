@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<SectionContainerProps>(), {
         </template>
       </SectionHeader>
 		</section>
-		<section v-if="content" class="p-3">
+		<section v-if="content" class="p-3 h-full">
 			<slot />
 		</section>
 	</div>

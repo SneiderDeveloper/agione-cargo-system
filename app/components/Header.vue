@@ -1,8 +1,4 @@
 <script setup lang="ts">
-const router = useRouter()
-const headerTitle = useState('headerTitle', () => '')
-const isNavBack = useState('isNavBack', () => false)
-const route = useRoute()
 
 interface Config {
   [key: string]: {
@@ -12,38 +8,47 @@ interface Config {
 }
 
 const config: Config = {
-   '/admin': {
+   'admin': {
       title: 'Operations Control Center',
       isNavBack: false
    },
-   '/warehouse': {
+   'admin-awb-id': {
+      title: 'AWB Management',
+      isNavBack: true
+   },
+   'warehouse': {
       title: 'Warehouse Acceptance Operation',
       isNavBack: false
    },
-   '/warehouse/order/create': {
+   'warehouse-order-create': {
       title: 'Create Order',
       isNavBack: true
    },
-   '/warehouse/order/': {
+   'warehouse-order-id': {
       title: 'Order Details',
       isNavBack: true
    },
-   '/warehouse/order/history': {
-      title: 'Order History',
+   'warehouse-awb-id': {
+      title: 'AWB Details',
       isNavBack: true
    },
-   '/warehouse/awb/details/': {
-      title: 'AWB Details',
+   'warehouse-order-history': {
+      title: 'Order History',
       isNavBack: true
    },
 }
 
+const router = useRouter()
+const headerTitle = useState('headerTitle', () => '')
+const route = useRoute()
+
+const name = computed(() => typeof route.name === 'string' ? route.name : '')
 </script>
 <template>
 	<header class="flex justify-between p-4 border-b border-slate-200 mb-2">
 		<section class="flex gap-2 items-center">
       <Button 
-        v-if="config[route.path]?.isNavBack || false" 
+        v-if="config[name]?.isNavBack || false" 
         variant="soft"
         icon="i-lucide-chevron-left"
         color="neutral"
@@ -51,7 +56,7 @@ const config: Config = {
         @click="router.back()"
      />
 			<h2 class="font-semibold">
-        {{ config[route.path]?.title || headerTitle}}
+        {{ config[name]?.title || headerTitle}}
       </h2>
 		</section>
 		<section class="flex gap-2">

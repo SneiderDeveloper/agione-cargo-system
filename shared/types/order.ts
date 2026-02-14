@@ -19,6 +19,10 @@ export interface Driver {
   licensePhoto: string;
 }
 
+export interface WarehouseAgent {
+  fullName: string;
+}
+
 export interface Order {
   id: number;
   statusId: number;
@@ -47,6 +51,7 @@ export interface Order {
   };
   awbs: AwbSummary[];
   driver: Driver;
+  warehouseAgent: WarehouseAgent;
   smsId: number;
   driverCheckIn: Date;
   driverCheckOut: Date;

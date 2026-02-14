@@ -31,7 +31,7 @@ const { data: awbs } = await useLazyFetch<Awb[]>('/api/awb')
       <span>Status Board</span>
     </template>
     <template #calendar>
-      <span>Calendar</span>
+      <Calendar />
     </template>
   </UTabs>
 </template>

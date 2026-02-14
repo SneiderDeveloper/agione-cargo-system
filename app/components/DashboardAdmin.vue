@@ -51,7 +51,7 @@ defineProps<{
 </script>
 <template>
   <div class="flex flex-col gap-3">
-    <div class="grid grid-cols-2 gap-2">
+    <div class="flex flex-wrap gap-2">
       <template v-for="ticker in tickers">
         <Ticker 
           :value="ticker.value" 
@@ -91,10 +91,10 @@ defineProps<{
             :description="awb.natureOfGoods"
             detailsLink="/admin/awb/"
             :user="{
-              name: awb?.driver?.fullName,
+              name: awb?.order.driver?.fullName,
               description: 'Arrived at 10:30 AM',
               avatar: {
-                alt: awb?.driver?.fullName
+                alt: awb?.order.driver?.fullName
               }
             }"
             :seeDetails="true"

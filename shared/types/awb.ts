@@ -1,4 +1,4 @@
-import type { Driver } from './order'
+import type { Driver, WarehouseAgent } from './order'
 
 export interface AwbDetails {
   statusId: number,
@@ -37,8 +37,6 @@ export interface ActiveContainer {
 }
 
 export interface WarehouseAgentCheck {
-  warehouseAgentId: number,
-  warehouseAgentFullName: string,
   completed: {
     signature: string,
   },
@@ -49,16 +47,22 @@ export interface WarehouseAgentCheck {
   date: string,
 }
 
+export interface Order {
+  driverId: number,
+  warehouseAgentId: number,
+  priorityId: number,
+  priority: 'Low' | 'Medium' | 'High',
+  driver: Driver,
+  warehouseAgent: WarehouseAgent,
+}
+
 export interface Awb {
   id: number,
   driverId: number,
   statusId: number,
   orderId: number,
   status: 'Pending' | 'In progress' | 'Accepted' | 'Rejected',
-  order: {
-    priorityId: number,
-    priority: 'Low' | 'Medium' | 'High',
-  },
+  order: Order,
   code: string, // 002-8765-4321
   totalNumberOfPieces: number,
   totalWeight: number,
